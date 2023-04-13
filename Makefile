@@ -18,4 +18,5 @@ fg:
 	protoc --dart_out=grpc:client/lib/generated ./proto/reaction.proto
 	protoc --dart_out=grpc:client/lib/generated ./proto/statuses.proto
 	protoc --dart_out=grpc:client/lib/generated ./proto/timeline.proto
-	
+	protoc --dart_out=grpc:client/lib/generated google/protobuf/timestamp.proto
+	protoc --dart_out=grpc:client/lib/generated google/protobuf/empty.proto 
