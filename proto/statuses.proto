@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package="pkg/service/proto";
+import "google/protobuf/timestamp.proto";
+import "proto/account.proto";
+
+
+message Status {
+    string id = 1;
+    string content = 2;
+    string account_id = 3;
+    Account account = 4;
+    optional Status reply_to = 5;
+    optional Status reblog = 6;
+    repeated ReactionCount reaction_counts = 7;
+    google.protobuf.Timestamp timestamp = 8;
+}
+
+message ReactionCount {
+    string type = 1;
+    repeated string account_ids = 2;
+    bool me = 3;
+    optional string emoji_url = 4;
+    optional int32 emoji_width = 5;
+    optional int32 emoji_height = 6;
+}
+
+
+message CreateStatusRequest {
+    string content = 1;
+    optional string reply_id = 2;
+    optional string reblog_id = 3;
+}
+
+message GetStatusRequest {
+    string status_id = 1;
+}
+
+message DeleteStatusRequest {
+    string status_id = 1;
+}
+
+service StatusService {
+    rpc CreateStatus(CreateStatusRequest) returns (Status);
+    rpc GetStatus(GetStatusRequest) returns (Status);
+    rpc DeleteStatus(DeleteStatusRequest) returns (Status);
+}

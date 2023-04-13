@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package="pkg/service/proto";
+import "google/protobuf/timestamp.proto";
+import "proto/statuses.proto";
+
+
+message ReactionRequest {
+    string type = 1;
+    string status_id = 2;
+}
+
+message Reaction {
+    string type = 1;
+    string status_id = 2;
+    string account_id = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+service ReactionService {
+    rpc CreateReaction(ReactionRequest) returns (Status) {}
+    rpc DeleteReaction(ReactionRequest) returns (Status) {}
+}

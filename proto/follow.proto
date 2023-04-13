@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package="pkg/service/proto";
+import "proto/account_relationship.proto";
+
+message FollowRequest {
+  string account_id = 1;
+}
+
+message UnFollowRequest {
+  string account_id = 1;
+}
+
+
+service FollowService {
+    rpc Follow(FollowRequest) returns (AccountRelationship) {}
+    rpc UnFollow(UnFollowRequest) returns (AccountRelationship) {}
+}

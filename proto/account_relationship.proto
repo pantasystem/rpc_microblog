@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package="pkg/service/proto";
+
+message AccountRelationship {
+    string account_id = 1;
+    bool is_following = 2;
+}
+
+message GetAccountRelationshipRequest {
+    repeated string target_account_ids = 2;
+}
+
+message GetAccountRelationshipResponse {
+    repeated AccountRelationship account_relationships = 1;
+}
+
+service AccountRelationshipService {
+    rpc GetAccountRelationship(GetAccountRelationshipRequest) returns (GetAccountRelationshipResponse) {}
+}

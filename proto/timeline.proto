@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package="pkg/service/proto";
+import "proto/statuses.proto";
+
+
+message TimelineRequest {
+    optional string min_id = 1;
+    optional string max_id = 2;
+}
+
+message TimelineResponse {
+    repeated Status statuses = 1;
+    optional string next_min_id = 2;
+    optional string next_max_id = 3;
+}
+
+service TimelineService {
+    rpc GetTimeline(TimelineRequest) returns (TimelineResponse);
+}
