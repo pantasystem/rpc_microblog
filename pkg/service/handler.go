@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"systems.panta/rpc-microblog/pkg/module"
+	"systems.panta/rpc-microblog/pkg/service/proto"
 )
 
 type Key int
@@ -27,16 +28,16 @@ func Setup(m module.Module) *grpc.Server {
 		),
 	)
 
-	// accountService := AccountService{
-	// 	Core: core,
-	// }
+	accountService := AccountService{
+		Module: m,
+	}
 	// roomService := RoomService{
 	// 	Core: core,
 	// }
 	// messageService := MessageService{
 	// 	Core: core,
 	// }
-	// proto.RegisterAccountServiceServer(s, &accountService)
+	proto.RegisterAccountServiceServer(s, &accountService)
 	// proto.RegisterRoomServiceServer(s, &roomService)
 	// proto.RegisterMessageServiceServer(s, &messageService)
 
