@@ -1,13 +1,27 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
 
 type CustomEmoji struct {
-	Id        string `gorm:"primaryKey"`
-	Type      string `gorm:"type:varchar(255)"`
-	EmojiUrl  string `gorm:"type:varchar(255)"`
+	Id        uuid.UUID `gorm:"primaryKey"`
+	Type      string    `gorm:"type:varchar(255)"`
+	EmojiUrl  string    `gorm:"type:varchar(255)"`
 	Width     int
 	Height    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (r *CustomEmoji) BeforeCreate(tx *gorm.DB) (err error) {
+	uuid, err := uuid.NewRandom()
+	if err != nil {
+		return err
+	}
+	r.Id = uuid
+	return nil
 }

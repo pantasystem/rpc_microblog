@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type Status struct {
@@ -18,4 +19,13 @@ type Status struct {
 	Reactions []*Reaction
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (r *Status) BeforeCreate(tx *gorm.DB) (err error) {
+	uuid, err := uuid.NewRandom()
+	if err != nil {
+		return err
+	}
+	r.Id = uuid
+	return nil
 }

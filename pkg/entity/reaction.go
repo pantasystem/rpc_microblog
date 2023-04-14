@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type Reaction struct {
@@ -17,4 +18,13 @@ type Reaction struct {
 	CustomEmoji   *CustomEmoji `gorm:"foreignKey:CustomEmojiId"`
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+}
+
+func (r *Reaction) BeforeCreate(tx *gorm.DB) (err error) {
+	uuid, err := uuid.NewRandom()
+	if err != nil {
+		return err
+	}
+	r.Id = uuid
+	return nil
 }
