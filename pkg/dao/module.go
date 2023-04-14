@@ -15,6 +15,12 @@ func (m ModuleImpl) AccountRepository() repository.AccountRepository {
 	}
 }
 
+func (m ModuleImpl) FollowRepository() repository.FollowRepository {
+	return &FollowRepositoryImpl{
+		Db: m.Db,
+	}
+}
+
 func NewModule(db *gorm.DB) repository.Module {
 	m := ModuleImpl{
 		Db: db,
