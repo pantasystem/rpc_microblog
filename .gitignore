@@ -47,3 +47,4 @@ go.work
 test.db
 
 tmp/
+.env
