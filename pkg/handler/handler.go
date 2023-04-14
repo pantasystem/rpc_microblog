@@ -1,4 +1,4 @@
-package service
+package handler
 
 import (
 	// "com.github/pantasystem/rpc-chat/pkg/impl"
@@ -9,8 +9,8 @@ import (
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"systems.panta/rpc-microblog/pkg/handler/proto"
 	"systems.panta/rpc-microblog/pkg/module"
-	"systems.panta/rpc-microblog/pkg/service/proto"
 )
 
 type Key int

@@ -11,8 +11,8 @@ import (
 	"gorm.io/gorm"
 	"systems.panta/rpc-microblog/pkg/config"
 	"systems.panta/rpc-microblog/pkg/entity"
+	"systems.panta/rpc-microblog/pkg/handler"
 	"systems.panta/rpc-microblog/pkg/module"
-	"systems.panta/rpc-microblog/pkg/service"
 )
 
 func main() {
@@ -37,7 +37,7 @@ func main() {
 	m := module.ModuleImpl{
 		Db: db,
 	}
-	s := service.Setup(m)
+	s := handler.Setup(m)
 	go func() {
 		fmt.Printf("start gRPC server port: %v", config.Port)
 		s.Serve(listener)

@@ -1,4 +1,4 @@
-package service
+package handler
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	"gorm.io/gorm"
 	"systems.panta/rpc-microblog/pkg/entity"
+	"systems.panta/rpc-microblog/pkg/handler/proto"
 	"systems.panta/rpc-microblog/pkg/module"
-	"systems.panta/rpc-microblog/pkg/service/proto"
 )
 
 type AccountService struct {
