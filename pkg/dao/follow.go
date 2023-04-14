@@ -54,3 +54,12 @@ func (r *FollowRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*ent
 	}
 	return &follow, nil
 }
+
+func (r *FollowRepositoryImpl) FindByFollowerIdAndAccountId(ctx context.Context, followerId uuid.UUID, accountId uuid.UUID) ([]*entity.Follow, error) {
+	var follows []*entity.Follow
+	result := r.Db.Model(&entity.Follow{}).Where("follow_id = ? AND account_id = ?", followerId, accountId).Find(&follows)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return follows, nil
+}
