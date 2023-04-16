@@ -21,6 +21,12 @@ func (m ModuleImpl) FollowRepository() repository.FollowRepository {
 	}
 }
 
+func (m ModuleImpl) StatusRepository() repository.StatusRepository {
+	return &StatusRepositoryImpl{
+		Db: m.Db,
+	}
+}
+
 func NewModule(db *gorm.DB) repository.Module {
 	m := ModuleImpl{
 		Db: db,
