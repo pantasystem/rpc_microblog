@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"systems.panta/rpc-microblog/pkg/entity"
+	"systems.panta/rpc-microblog/pkg/repository"
 )
 
 type StatusRepositoryImpl struct {
@@ -35,4 +36,39 @@ func (r *StatusRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*ent
 		return nil, result.Error
 	}
 	return &status, nil
+}
+
+func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accountId uuid.UUID, query *repository.FindByFollowedAccountQuery) ([]*entity.Status, error) {
+	var statuses []*entity.Status
+
+	var statusByMaxId *entity.Status
+	var statusByMinId *entity.Status
+	if query.MaxId != nil {
+		res := r.Db.First(statusByMaxId, "id = ?", query.MaxId)
+		if res.Error != nil {
+			return nil, res.Error
+		}
+	}
+	if query.MinId != nil {
+		res := r.Db.First(statusByMinId, "id = ?", query.MinId)
+		if res.Error != nil {
+			return nil, res.Error
+		}
+	}
+	q := r.Db.Model(&entity.Status{}).Joins("INNER JOIN follows ON follows.account_id = statuses.account_id").
+		Where("follows.follow_id = ?", accountId)
+
+	if statusByMaxId != nil {
+		q = q.Where("statuses.created_at < ?", statusByMaxId.CreatedAt)
+	}
+	if statusByMinId != nil {
+		q = q.Where("statuses.created_at > ?", statusByMinId.CreatedAt)
+	}
+
+	res := q.Limit(20).Find(&statuses)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return statuses, nil
 }

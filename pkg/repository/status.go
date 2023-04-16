@@ -11,4 +11,10 @@ type StatusRepository interface {
 	Create(context.Context, *entity.Status) (*entity.Status, error)
 	Delete(context.Context, *entity.Status) error
 	FindById(context.Context, uuid.UUID) (*entity.Status, error)
+	FindByFollowedAccount(context.Context, uuid.UUID, *FindByFollowedAccountQuery) ([]*entity.Status, error)
+}
+
+type FindByFollowedAccountQuery struct {
+	MaxId *uuid.UUID
+	MinId *uuid.UUID
 }
