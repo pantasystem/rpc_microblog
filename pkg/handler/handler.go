@@ -31,6 +31,9 @@ func Setup(m module.Module) *grpc.Server {
 	accountService := AccountService{
 		Module: m,
 	}
+	followService := FollowService{
+		Module: m,
+	}
 	// roomService := RoomService{
 	// 	Core: core,
 	// }
@@ -38,6 +41,7 @@ func Setup(m module.Module) *grpc.Server {
 	// 	Core: core,
 	// }
 	proto.RegisterAccountServiceServer(s, &accountService)
+	proto.RegisterFollowServiceServer(s, &followService)
 	// proto.RegisterRoomServiceServer(s, &roomService)
 	// proto.RegisterMessageServiceServer(s, &messageService)
 
