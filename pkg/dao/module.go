@@ -27,6 +27,12 @@ func (m ModuleImpl) StatusRepository() repository.StatusRepository {
 	}
 }
 
+func (m ModuleImpl) CustomEmojiRepository() repository.CustomEmojiRepository {
+	return &CustomEmojiRepositoryImpl{
+		Db: m.Db,
+	}
+}
+
 func NewModule(db *gorm.DB) repository.Module {
 	m := ModuleImpl{
 		Db: db,

@@ -7,8 +7,8 @@ import (
 )
 
 type CustomEmojiRepository interface {
-	FindAll() (context.Context, []*entity.CustomEmoji, error)
+	FindAll(context.Context) ([]*entity.CustomEmoji, error)
 	Create(context.Context, *entity.CustomEmoji) (*entity.CustomEmoji, error)
 	Delete(context.Context, *entity.CustomEmoji) error
-	FindByName(context.Context, string) (*entity.CustomEmoji, error)
+	FindByName(context.Context, string) ([]*entity.CustomEmoji, error)
 }
