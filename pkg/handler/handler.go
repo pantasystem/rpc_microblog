@@ -34,6 +34,10 @@ func Setup(m module.Module) *grpc.Server {
 	followService := FollowService{
 		Module: m,
 	}
+
+	customEmojiService := CustomEmojiService{
+		Module: m,
+	}
 	// roomService := RoomService{
 	// 	Core: core,
 	// }
@@ -42,6 +46,7 @@ func Setup(m module.Module) *grpc.Server {
 	// }
 	proto.RegisterAccountServiceServer(s, &accountService)
 	proto.RegisterFollowServiceServer(s, &followService)
+	proto.RegisterCustomEmojiServiceServer(s, &customEmojiService)
 	// proto.RegisterRoomServiceServer(s, &roomService)
 	// proto.RegisterMessageServiceServer(s, &messageService)
 

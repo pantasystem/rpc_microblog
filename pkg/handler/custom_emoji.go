@@ -10,6 +10,7 @@ import (
 
 type CustomEmojiService struct {
 	Module module.Module
+	proto.UnimplementedCustomEmojiServiceServer
 }
 
 func (r *CustomEmojiService) GetCustomEmojis(ctx context.Context, req *emptypb.Empty) (*proto.CustomEmojis, error) {
