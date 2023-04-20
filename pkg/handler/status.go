@@ -50,7 +50,7 @@ func (r *StatusService) CreateStatus(ctx context.Context, req *proto.CreateStatu
 	if err != nil {
 		return nil, err
 	}
-	return ConvertToProtoModel(s), nil
+	return ConvertToProtoModel(s, &aId), nil
 }
 
 func (r *StatusService) GetStatus(ctx context.Context, req *proto.GetStatusRequest) (*proto.Status, error) {
@@ -62,7 +62,13 @@ func (r *StatusService) GetStatus(ctx context.Context, req *proto.GetStatusReque
 	if err != nil {
 		return nil, err
 	}
-	return ConvertToProtoModel(s), nil
+	aId, ok := ctx.Value(AccountId).(string)
+	var aUuid *uuid.UUID
+	if ok {
+		u, _ := uuid.Parse(aId)
+		aUuid = &u
+	}
+	return ConvertToProtoModel(s, aUuid), nil
 }
 
 func (r *StatusService) DeleteStatus(ctx context.Context, req *proto.DeleteStatusRequest) (*proto.Status, error) {
@@ -93,21 +99,51 @@ func (r *StatusService) DeleteStatus(ctx context.Context, req *proto.DeleteStatu
 	if err != nil {
 		return nil, err
 	}
-	return ConvertToProtoModel(s), nil
+	return ConvertToProtoModel(s, &aUuid), nil
 }
 
-func ConvertToProtoModel(s *entity.Status) *proto.Status {
+func ConvertToProtoModel(s *entity.Status, myId *uuid.UUID) *proto.Status {
 	p := &proto.Status{
 		Id:        s.Id.String(),
 		Content:   s.Content,
 		AccountId: s.AccountId.String(),
 	}
 	if s.Reply != nil {
-		p.ReplyTo = ConvertToProtoModel(s.Reply)
+		p.ReplyTo = ConvertToProtoModel(s.Reply, myId)
 	}
 
 	if s.Reblog != nil {
-		p.Reblog = ConvertToProtoModel(s.Reblog)
+		p.Reblog = ConvertToProtoModel(s.Reblog, myId)
+	}
+
+	// ReactionsをReactionCounts配列に変換
+	p.ReactionCounts = make([]*proto.ReactionCount, 0)
+
+	// stringをkeyとしproto.ReactionCountをvalueとするmapを作成
+	reactionCountMap := make(map[string]*proto.ReactionCount)
+
+	for _, r := range s.Reactions {
+		c := reactionCountMap[r.Type]
+		if c == nil {
+			c = &proto.ReactionCount{
+				Type: r.Type,
+			}
+			reactionCountMap[r.Type] = c
+
+		}
+		if r.CustomEmoji != nil {
+			c.EmojiUrl = &r.CustomEmoji.EmojiUrl
+			h := int32(r.CustomEmoji.Height)
+			c.EmojiHeight = &h
+			w := int32(r.CustomEmoji.Width)
+			c.EmojiWidth = &w
+		}
+
+		c.AccountIds = append(c.AccountIds, r.AccountId.String())
+
+		if myId != nil && r.AccountId == *myId {
+			c.Me = true
+		}
 	}
 
 	return p

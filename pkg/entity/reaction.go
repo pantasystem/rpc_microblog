@@ -9,7 +9,7 @@ import (
 
 type Reaction struct {
 	Id            uuid.UUID `gorm:"primaryKey"`
-	AccountId     string    `gorm:"index"`
+	AccountId     uuid.UUID `gorm:"index"`
 	Account       *Account  `gorm:"foreignKey:AccountId"`
 	StatusId      string    `gorm:"index"`
 	Status        *Status   `gorm:"foreignKey:StatusId"`
