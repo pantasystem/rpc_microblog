@@ -31,7 +31,18 @@ func (r *StatusRepositoryImpl) Delete(ctx context.Context, status *entity.Status
 
 func (r *StatusRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*entity.Status, error) {
 	var status entity.Status
-	result := r.Db.First(&status, id)
+	result := r.Db.Preload(
+		"Account",
+		"Reactions",
+		"Reactions.CustomEmoji",
+		"Reblog.Account",
+		"Reblog.Reactions",
+		"Reblog.Reactions.CustomEmoji",
+		"Reply",
+		"Reply.Account",
+		"Reply.Reactions",
+		"Reply.Reactions.CustomEmoji",
+	).First(&status, id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -65,7 +76,18 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 		q = q.Where("statuses.created_at > ?", statusByMinId.CreatedAt)
 	}
 
-	res := q.Limit(20).Find(&statuses)
+	res := q.Preload(
+		"Account",
+		"Reactions",
+		"Reactions.CustomEmoji",
+		"Reblog.Account",
+		"Reblog.Reactions",
+		"Reblog.Reactions.CustomEmoji",
+		"Reply",
+		"Reply.Account",
+		"Reply.Reactions",
+		"Reply.Reactions.CustomEmoji",
+	).Limit(20).Find(&statuses)
 	if res.Error != nil {
 		return nil, res.Error
 	}
