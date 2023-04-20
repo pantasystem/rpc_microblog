@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"systems.panta/rpc-microblog/pkg/entity"
 	"systems.panta/rpc-microblog/pkg/repository"
 )
@@ -31,18 +32,13 @@ func (r *StatusRepositoryImpl) Delete(ctx context.Context, status *entity.Status
 
 func (r *StatusRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*entity.Status, error) {
 	var status entity.Status
-	result := r.Db.Preload(
-		"Account",
-		"Reactions",
-		"Reactions.CustomEmoji",
-		"Reblog.Account",
-		"Reblog.Reactions",
-		"Reblog.Reactions.CustomEmoji",
-		"Reply",
-		"Reply.Account",
-		"Reply.Reactions",
-		"Reply.Reactions.CustomEmoji",
-	).First(&status, id)
+	result := r.Db.Preload("Reactions.CustomEmoji").
+		Preload("Reblog.Account").
+		Preload("Reply.Account").
+		Preload("Reblog.Reactions").
+		Preload("Reply.Reactions").
+		Preload(clause.Associations).
+		First(&status, id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -76,18 +72,13 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 		q = q.Where("statuses.created_at > ?", statusByMinId.CreatedAt)
 	}
 
-	res := q.Preload(
-		"Account",
-		"Reactions",
-		"Reactions.CustomEmoji",
-		"Reblog.Account",
-		"Reblog.Reactions",
-		"Reblog.Reactions.CustomEmoji",
-		"Reply",
-		"Reply.Account",
-		"Reply.Reactions",
-		"Reply.Reactions.CustomEmoji",
-	).Limit(20).Find(&statuses)
+	res := q.Preload("Reactions.CustomEmoji").
+		Preload("Reblog.Account").
+		Preload("Reply.Account").
+		Preload("Reblog.Reactions").
+		Preload("Reply.Reactions").
+		Preload(clause.Associations).
+		Limit(20).Find(&statuses)
 	if res.Error != nil {
 		return nil, res.Error
 	}

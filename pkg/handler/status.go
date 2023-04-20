@@ -122,6 +122,14 @@ func ConvertToProtoModel(s *entity.Status, myId *uuid.UUID) *proto.Status {
 	// stringをkeyとしproto.ReactionCountをvalueとするmapを作成
 	reactionCountMap := make(map[string]*proto.ReactionCount)
 
+	if s.Account != nil {
+		p.Account = &proto.Account{
+			Id:        s.Account.Id.String(),
+			AvatarUrl: *s.Account.AvatarUrl,
+			Name:      s.Account.Name,
+		}
+	}
+
 	for _, r := range s.Reactions {
 		c := reactionCountMap[r.Type]
 		if c == nil {
