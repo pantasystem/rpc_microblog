@@ -63,7 +63,8 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 		}
 	}
 	q := r.Db.Model(&entity.Status{}).Joins("INNER JOIN follows ON follows.account_id = statuses.account_id").
-		Where("follows.follow_id = ?", accountId)
+		Where("follows.follow_id = ?", accountId).
+		Or("statuses.account_id = ?", accountId)
 
 	if statusByMaxId != nil {
 		q = q.Where("statuses.created_at < ?", statusByMaxId.CreatedAt)
