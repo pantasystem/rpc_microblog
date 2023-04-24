@@ -12,6 +12,7 @@ import (
 
 type TimelienService struct {
 	Module module.Module
+	proto.UnimplementedTimelineServiceServer
 }
 
 func (r *TimelienService) GetTimeline(ctx context.Context, req *proto.TimelineRequest) (*proto.TimelineResponse, error) {
