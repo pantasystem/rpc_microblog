@@ -1,3 +1,4 @@
+import 'package:client/generated/proto/follow.pbgrpc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grpc/grpc.dart';
 
@@ -19,4 +20,8 @@ final accountClientProvider = Provider((ref) {
 
 final statusClientProvider = Provider((ref) {
   return StatusServiceClient(ref.read(channelProvider));
+});
+
+final followClientProvider = Provider((ref) {
+  return FollowServiceClient(ref.read(channelProvider));
 });
