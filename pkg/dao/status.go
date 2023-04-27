@@ -62,8 +62,8 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 			return nil, res.Error
 		}
 	}
-	q := r.Db.Model(&entity.Status{}).Joins("INNER JOIN follows ON follows.account_id = statuses.account_id").
-		Where("follows.follow_id = ?", accountId).
+	q := r.Db.Model(&entity.Status{}).Joins("INNER JOIN follows ON follows.target_account_id = statuses.account_id").
+		Where("follows.account_id = ?", accountId).
 		Or("statuses.account_id = ?", accountId)
 
 	if statusByMaxId != nil {

@@ -28,9 +28,9 @@ func (r *FollowRepositoryImpl) Delete(ctx context.Context, f *entity.Follow) err
 	return nil
 }
 
-func (r *FollowRepositoryImpl) FindByFollowerId(ctx context.Context, followerId uuid.UUID) ([]*entity.Follow, error) {
+func (r *FollowRepositoryImpl) FindByFollowTargetAccountId(ctx context.Context, followerId uuid.UUID) ([]*entity.Follow, error) {
 	var follows []*entity.Follow
-	result := r.Db.Model(&entity.Follow{}).Where("follow_id = ?", followerId).Find(&follows)
+	result := r.Db.Model(&entity.Follow{}).Where("target_account_id = ?", followerId).Find(&follows)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -55,9 +55,9 @@ func (r *FollowRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*ent
 	return &follow, nil
 }
 
-func (r *FollowRepositoryImpl) FindByFollowerIdAndAccountId(ctx context.Context, followerId uuid.UUID, accountId uuid.UUID) ([]*entity.Follow, error) {
+func (r *FollowRepositoryImpl) FindByFollowTargetAccountIdAndAccountId(ctx context.Context, targetAccountId uuid.UUID, accountId uuid.UUID) ([]*entity.Follow, error) {
 	var follows []*entity.Follow
-	result := r.Db.Model(&entity.Follow{}).Where("follow_id = ? AND account_id = ?", followerId, accountId).Find(&follows)
+	result := r.Db.Model(&entity.Follow{}).Where("target_account_id = ? AND account_id = ?", targetAccountId, accountId).Find(&follows)
 	if result.Error != nil {
 		return nil, result.Error
 	}

@@ -13,7 +13,7 @@ type FollowService struct {
 }
 
 func (r *FollowService) ToggleFollow(ctx context.Context, targetId uuid.UUID, followerId uuid.UUID) error {
-	follows, err := r.FR.FindByFollowerIdAndAccountId(ctx, followerId, targetId)
+	follows, err := r.FR.FindByFollowTargetAccountIdAndAccountId(ctx, targetId, followerId)
 	if err != nil {
 		return err
 	}
@@ -21,8 +21,8 @@ func (r *FollowService) ToggleFollow(ctx context.Context, targetId uuid.UUID, fo
 		return r.FR.Delete(ctx, follows[0])
 	} else {
 		_, err := r.FR.Create(ctx, &entity.Follow{
-			AccountId: targetId,
-			FollowId:  followerId,
+			AccountId:       followerId,
+			TargetAccountId: targetId,
 		})
 		return err
 	}
