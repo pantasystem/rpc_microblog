@@ -35,7 +35,11 @@ final routerProvider = Provider((ref) {
       GoRoute(
         path: "/status-editor",
         pageBuilder: (context, state) {
-          return const MaterialPage(child: StatusEditorPage());
+          return MaterialPage(
+            child: StatusEditorPage(
+              replyToId: state.queryParams["replyId"],
+            ),
+          );
         },
       ),
 

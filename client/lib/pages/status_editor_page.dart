@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class StatusEditorPage extends ConsumerStatefulWidget {
-  const StatusEditorPage({super.key});
+  const StatusEditorPage({super.key, this.replyToId});
+  final String? replyToId;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -15,7 +16,7 @@ class StatusEditorPage extends ConsumerStatefulWidget {
   }
 }
 
-class StatusEditorPageState extends ConsumerState {
+class StatusEditorPageState extends ConsumerState<StatusEditorPage> {
   final _formKey = GlobalKey<FormState>();
   final _inputContentController = TextEditingController();
 
@@ -50,6 +51,7 @@ class StatusEditorPageState extends ConsumerState {
                   if (_formKey.currentState!.validate()) {
                     ref.read(statusRepositoryProvider).create(
                       text: _inputContentController.text,
+                      replyId: widget.replyToId,
                     ).then((value) {
                       log('投稿したデータ: $value');
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -58,7 +60,6 @@ class StatusEditorPageState extends ConsumerState {
                       ref.read(timelineNotifierProvider).refreshLoad();
                       Navigator.of(context).pop();
                     });
-
                   }
                 },
                 child: const Text("投稿"),

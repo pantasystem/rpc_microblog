@@ -16,3 +16,7 @@ Status getContentStatus(Status status) {
 bool isReblog(Status status) {
   return status.hasReblog();
 }
+
+bool isReply(Status status) {
+  return status.hasReplyTo();
+}

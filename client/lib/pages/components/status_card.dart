@@ -29,6 +29,11 @@ class StatusCard extends StatelessWidget {
               Text("${status.account.name}さんがリポストしました"),
               const SizedBox(height: 8),
             ],
+          if (isReply(status))
+            ...[
+              Text("${status.account.name}さんが返信しました"),
+              const SizedBox(height: 8),
+            ],
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
