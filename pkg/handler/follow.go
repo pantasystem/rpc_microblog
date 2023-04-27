@@ -62,3 +62,63 @@ func (r *FollowService) UnFollow(ctx context.Context, req *proto.UnFollowRequest
 		IsFollowing: ar.IsFollowing,
 	}, nil
 }
+
+func (r *FollowService) GetFollows(ctx context.Context, req *proto.GetFollowsRequest) (*proto.FollowsResponse, error) {
+	aId, err := uuid.Parse(req.AccountId)
+	if err != nil {
+		return nil, err
+	}
+
+	follows, err := r.Module.RepositoryModule().FollowRepository().FindByAccountId(ctx, aId)
+	if err != nil {
+		return nil, err
+	}
+	protoFollows := make([]*proto.Follow, len(follows))
+	for i, f := range follows {
+		protoFollows[i] = &proto.Follow{
+			TargetAccount: &proto.Account{
+				Id:        f.TargetAccount.Id.String(),
+				Name:      f.TargetAccount.Name,
+				AvatarUrl: *f.TargetAccount.AvatarUrl,
+			},
+			Account: &proto.Account{
+				Id:        f.Account.Id.String(),
+				Name:      f.Account.Name,
+				AvatarUrl: *f.Account.AvatarUrl,
+			},
+		}
+	}
+	return &proto.FollowsResponse{
+		Follows: protoFollows,
+	}, nil
+}
+
+func (r *FollowService) GetFollowers(ctx context.Context, req *proto.GetFollowersRequest) (*proto.FollowsResponse, error) {
+	aId, err := uuid.Parse(req.AccountId)
+	if err != nil {
+		return nil, err
+	}
+
+	followers, err := r.Module.RepositoryModule().FollowRepository().FindByFollowTargetAccountId(ctx, aId)
+	if err != nil {
+		return nil, err
+	}
+	protoFollowers := make([]*proto.Follow, len(followers))
+	for i, f := range followers {
+		protoFollowers[i] = &proto.Follow{
+			TargetAccount: &proto.Account{
+				Id:        f.TargetAccount.Id.String(),
+				Name:      f.TargetAccount.Name,
+				AvatarUrl: *f.TargetAccount.AvatarUrl,
+			},
+			Account: &proto.Account{
+				Id:        f.Account.Id.String(),
+				Name:      f.Account.Name,
+				AvatarUrl: *f.Account.AvatarUrl,
+			},
+		}
+	}
+	return &proto.FollowsResponse{
+		Follows: protoFollowers,
+	}, nil
+}
