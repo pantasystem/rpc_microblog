@@ -1,3 +1,4 @@
+import 'package:client/pages/components/status_card.dart';
 import 'package:client/state/timeline_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,7 @@ class TimelinePage extends ConsumerWidget {
           if (index == notifier.statuses.length - 1) {
             notifier.fetchNext();
           }
-          return ListTile(
-            title: Text(notifier.statuses[index].content),
-          );
+          return StatusCard(status: notifier.statuses[index]);
         }),
       onRefresh: () {
         return notifier.refreshLoad();
