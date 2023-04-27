@@ -17,7 +17,7 @@ type AccountRelationshipService struct {
 }
 
 func (r *AccountRelationshipService) FindBy(ctx context.Context, accountId uuid.UUID, targetId uuid.UUID) (*AccountRelationship, error) {
-	follows, err := r.FR.FindByFollowTargetAccountIdAndAccountId(ctx, accountId, targetId)
+	follows, err := r.FR.FindByFollowTargetAccountIdAndAccountId(ctx, targetId, accountId)
 	if err != nil {
 		return nil, err
 	}
