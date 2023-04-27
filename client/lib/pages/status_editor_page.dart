@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:client/providers/repositories.dart';
+import 'package:client/state/timeline_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,6 +55,7 @@ class StatusEditorPageState extends ConsumerState {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("投稿しました")),
                       );
+                      ref.read(timelineNotifierProvider).refreshLoad();
                       Navigator.of(context).pop();
                     });
 
