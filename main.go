@@ -28,7 +28,7 @@ func main() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&entity.Account{}, &entity.Status{}, &entity.Reaction{}, &entity.CustomEmoji{})
+	db.AutoMigrate(&entity.Account{}, &entity.Status{}, &entity.Reaction{}, &entity.CustomEmoji{}, &entity.Follow{})
 
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Port))
 	if err != nil {
