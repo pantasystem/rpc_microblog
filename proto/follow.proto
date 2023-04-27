@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option go_package="pkg/service/proto";
 import "proto/account_relationship.proto";
+import "proto/account.proto";
 
 message FollowRequest {
   string account_id = 1;
@@ -11,8 +12,26 @@ message UnFollowRequest {
   string account_id = 1;
 }
 
+message FollowsResponse {
+  repeated Follow follows = 1;
+}
+
+message GetFollowsRequest {
+  string account_id = 1;
+}
+
+message GetFollowersRequest {
+  string account_id = 1;
+}
+
+message Follow {
+  Account account = 1;
+  Account targetAccount = 2;
+}
 
 service FollowService {
     rpc Follow(FollowRequest) returns (AccountRelationship) {}
     rpc UnFollow(UnFollowRequest) returns (AccountRelationship) {}
+    rpc GetFollows(GetFollowsRequest) returns (FollowsResponse) {}
+    rpc GetFollowers(GetFollowersRequest) returns (FollowsResponse) {}
 }
