@@ -62,7 +62,7 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 			return nil, res.Error
 		}
 	}
-	q := r.Db.Model(&entity.Status{}).Joins("INNER JOIN follows ON follows.target_account_id = statuses.account_id").
+	q := r.Db.Model(&entity.Status{}).Joins("LEFT JOIN follows ON follows.target_account_id = statuses.account_id").
 		Where("follows.account_id = ?", accountId).
 		Or("statuses.account_id = ?", accountId)
 
@@ -79,6 +79,7 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 		Preload("Reblog.Reactions").
 		Preload("Reply.Reactions").
 		Preload(clause.Associations).
+		Order("statuses.created_at DESC").
 		Limit(20).Find(&statuses)
 	if res.Error != nil {
 		return nil, res.Error
