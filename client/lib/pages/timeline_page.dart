@@ -1,3 +1,4 @@
+import 'package:client/ext/status.dart';
 import 'package:client/pages/components/status_card.dart';
 import 'package:client/providers/repositories.dart';
 import 'package:client/state/timeline_notifier.dart';
@@ -25,10 +26,15 @@ class TimelinePage extends ConsumerWidget {
               onReblogButtonPressed: () {
                 ref
                     .read(statusRepositoryProvider)
-                    .create(text: "", reblogId: notifier.statuses[index].id)
-                    .then((value) {
-                  notifier.refreshLoad();
-                });
+                    .create(
+                      text: "",
+                      reblogId: getContentStatus(notifier.statuses[index]).id,
+                    )
+                    .then(
+                  (value) {
+                    notifier.refreshLoad();
+                  },
+                );
               },
             );
           }),
@@ -39,4 +45,5 @@ class TimelinePage extends ConsumerWidget {
   }
 }
 
-final _initialFetchProvider = FutureProvider((ref) => ref.read(timelineNotifierProvider).refreshLoad());
+final _initialFetchProvider =
+    FutureProvider((ref) => ref.read(timelineNotifierProvider).refreshLoad());
