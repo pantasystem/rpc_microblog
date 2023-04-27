@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"systems.panta/rpc-microblog/pkg/handler/proto"
@@ -27,6 +28,7 @@ func (r *FollowService) Follow(ctx context.Context, req *proto.FollowRequest) (*
 
 	err = r.Module.ServiceModule().FollowService().ToggleFollow(ctx, aId, cUuid)
 	if err != nil {
+		fmt.Printf("follow: %+v\n", err)
 		return nil, err
 	}
 	ar, err := r.Module.ServiceModule().AccountRelationshipService().FindBy(ctx, cUuid, aId)
@@ -35,6 +37,7 @@ func (r *FollowService) Follow(ctx context.Context, req *proto.FollowRequest) (*
 	}
 	return &proto.AccountRelationship{
 		IsFollowing: ar.IsFollowing,
+		AccountId:   aId.String(),
 	}, nil
 }
 
