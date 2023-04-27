@@ -22,6 +22,7 @@ type AccountServiceClient interface {
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
 	Find(ctx context.Context, in *FindUser, opts ...grpc.CallOption) (*Account, error)
 	FindMe(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*FindMeResponse, error)
+	Search(ctx context.Context, in *SearchUserRequest, opts ...grpc.CallOption) (*SearchUserResponse, error)
 }
 
 type accountServiceClient struct {
@@ -59,6 +60,15 @@ func (c *accountServiceClient) FindMe(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
+func (c *accountServiceClient) Search(ctx context.Context, in *SearchUserRequest, opts ...grpc.CallOption) (*SearchUserResponse, error) {
+	out := new(SearchUserResponse)
+	err := c.cc.Invoke(ctx, "/AccountService/Search", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServiceServer is the server API for AccountService service.
 // All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility
@@ -66,6 +76,7 @@ type AccountServiceServer interface {
 	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
 	Find(context.Context, *FindUser) (*Account, error)
 	FindMe(context.Context, *emptypb.Empty) (*FindMeResponse, error)
+	Search(context.Context, *SearchUserRequest) (*SearchUserResponse, error)
 	mustEmbedUnimplementedAccountServiceServer()
 }
 
@@ -81,6 +92,9 @@ func (UnimplementedAccountServiceServer) Find(context.Context, *FindUser) (*Acco
 }
 func (UnimplementedAccountServiceServer) FindMe(context.Context, *emptypb.Empty) (*FindMeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindMe not implemented")
+}
+func (UnimplementedAccountServiceServer) Search(context.Context, *SearchUserRequest) (*SearchUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
 }
 func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
 
@@ -149,6 +163,24 @@ func _AccountService_FindMe_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccountService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Search(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/AccountService/Search",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Search(ctx, req.(*SearchUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -167,6 +199,10 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindMe",
 			Handler:    _AccountService_FindMe_Handler,
+		},
+		{
+			MethodName: "Search",
+			Handler:    _AccountService_Search_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

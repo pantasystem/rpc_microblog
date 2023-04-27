@@ -45,3 +45,12 @@ func (r *AccountRepositoryImpl) Delete(ctx context.Context, id uuid.UUID) error 
 	}
 	return nil
 }
+
+func (r *AccountRepositoryImpl) Search(ctx context.Context, keyword string) ([]*entity.Account, error) {
+	var accounts []*entity.Account
+	result := r.Db.Where("name LIKE ?", "%"+keyword+"%").Find(&accounts)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return accounts, nil
+}

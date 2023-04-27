@@ -12,4 +12,5 @@ type AccountRepository interface {
 	FindByID(context.Context, uuid.UUID) (*entity.Account, error)
 	FindByToken(context.Context, string) (*entity.Account, error)
 	Delete(context.Context, uuid.UUID) error
+	Search(context.Context, string) ([]*entity.Account, error)
 }
