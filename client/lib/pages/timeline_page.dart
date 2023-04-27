@@ -1,7 +1,6 @@
 import 'package:client/pages/components/status_card.dart';
 import 'package:client/providers/repositories.dart';
 import 'package:client/state/timeline_notifier.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +10,7 @@ class TimelinePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(timelineNotifierProvider);
+    ref.watch(_initialFetchProvider);
     return RefreshIndicator(
       child: ListView.builder(
           itemCount: notifier.statuses.length,
@@ -38,3 +38,5 @@ class TimelinePage extends ConsumerWidget {
     );
   }
 }
+
+final _initialFetchProvider = FutureProvider((ref) => ref.read(timelineNotifierProvider).refreshLoad());
