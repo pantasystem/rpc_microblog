@@ -27,6 +27,7 @@ class RouterPage extends ConsumerWidget {
       title: "Chat App",
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.grey),
       ),
       routerConfig: router,
     );
