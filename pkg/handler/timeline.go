@@ -45,7 +45,16 @@ func (r *TimelienService) GetTimeline(ctx context.Context, req *proto.TimelineRe
 	for i, s := range res {
 		protoStatuses[i] = ConvertToProtoModel(s, &aUuid)
 	}
-	return &proto.TimelineResponse{
+	tr := &proto.TimelineResponse{
 		Statuses: protoStatuses,
-	}, nil
+	}
+
+	if len(res) > 0 {
+		nmiId := res[0].Id.String()
+		tr.NextMinId = &nmiId
+		nmaId := res[len(res)-1].Id.String()
+		tr.NextMaxId = &nmaId
+	}
+
+	return tr, nil
 }

@@ -13,6 +13,9 @@ class TimelinePage extends ConsumerWidget {
       child: ListView.builder(
         itemCount: notifier.statuses.length,
         itemBuilder: (BuildContext context, int index) {
+          if (index == notifier.statuses.length - 1) {
+            notifier.fetchNext();
+          }
           return ListTile(
             title: Text(notifier.statuses[index].content),
           );
