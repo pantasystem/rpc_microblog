@@ -54,6 +54,7 @@ class StatusEditorPageState extends ConsumerState {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("投稿しました")),
                       );
+                      Navigator.of(context).pop();
                     });
 
                   }
