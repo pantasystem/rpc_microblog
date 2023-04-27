@@ -2,6 +2,7 @@
 import 'package:client/pages/home_page.dart';
 import 'package:client/pages/register_page.dart';
 import 'package:client/pages/splash_page.dart';
+import 'package:client/pages/status_editor_page.dart';
 import 'package:client/state/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,13 @@ final routerProvider = Provider((ref) {
           return const MaterialPage(child: RegisterPage());
         },
       ),
+      GoRoute(
+        path: "/status-editor",
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: StatusEditorPage());
+        },
+      ),
+
     ],
     redirect: (context, state) {
       if (state.subloc != "/splash" &&
