@@ -23,11 +23,11 @@ message FindUser {
     string id = 1;
 }
 
-message SearchUserRequest {
+message SearchAccountRequest {
     string keyword = 1;
 }
 
-message SearchUserResponse {
+message SearchAccountResponse {
     repeated Account accounts = 1;
 }
 
@@ -47,5 +47,5 @@ service AccountService {
     rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
     rpc Find(FindUser) returns (Account) {}
     rpc FindMe(google.protobuf.Empty) returns(FindMeResponse) {}
-    rpc Search(SearchUserRequest) returns (SearchUserResponse) {}
+    rpc Search(SearchAccountRequest) returns (SearchAccountResponse) {}
 }

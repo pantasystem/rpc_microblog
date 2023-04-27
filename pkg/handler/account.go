@@ -83,3 +83,21 @@ func (r *AccountService) FindMe(ctx context.Context, req *emptypb.Empty) (*proto
 		AuthState: proto.AuthState_AUTHENTICATED,
 	}, nil
 }
+
+func (r *AccountService) Search(ctx context.Context, req *proto.SearchAccountRequest) (*proto.SearchAccountResponse, error) {
+	accounts, err := r.Module.RepositoryModule().AccountRepository().Search(ctx, req.Keyword)
+	if err != nil {
+		return nil, err
+	}
+	var res []*proto.Account
+	for _, a := range accounts {
+		res = append(res, &proto.Account{
+			Id:        a.Id.String(),
+			Name:      a.Name,
+			AvatarUrl: *a.AvatarUrl,
+		})
+	}
+	return &proto.SearchAccountResponse{
+		Accounts: res,
+	}, nil
+}
