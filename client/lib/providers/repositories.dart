@@ -1,5 +1,5 @@
-
 import 'package:client/repositories/follow_repository.dart';
+import 'package:client/repositories/timeline_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repositories/account_relationship_repository.dart';
@@ -36,6 +36,13 @@ final accountRelationshipRepositoryProvider = Provider((ref) {
 final followRepositoryProvider = Provider((ref) {
   return FollowRepository(
     client: ref.read(followClientProvider),
+    authRepository: ref.read(authRepositoryProvider),
+  );
+});
+
+final timelineRepositoryProvider = Provider((ref) {
+  return TimelineRepository(
+    client: ref.read(timelineClientProvider),
     authRepository: ref.read(authRepositoryProvider),
   );
 });

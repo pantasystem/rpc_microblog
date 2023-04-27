@@ -1,4 +1,5 @@
 import 'package:client/generated/proto/follow.pbgrpc.dart';
+import 'package:client/generated/proto/timeline.pbgrpc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grpc/grpc.dart';
 
@@ -29,4 +30,8 @@ final followClientProvider = Provider((ref) {
 
 final accountRelationshipClientProvider = Provider((ref) {
   return AccountRelationshipServiceClient(ref.read(channelProvider));
+});
+
+final timelineClientProvider = Provider((ref) {
+  return TimelineServiceClient(ref.read(channelProvider));
 });
