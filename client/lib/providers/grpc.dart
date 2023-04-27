@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:client/generated/proto/follow.pbgrpc.dart';
 import 'package:client/generated/proto/timeline.pbgrpc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +10,12 @@ import '../generated/proto/account_relationship.pbgrpc.dart';
 import '../generated/proto/statuses.pbgrpc.dart';
 
 final channelProvider = Provider((ref) {
-  return ClientChannel('10.0.2.2',
+  return ClientChannel(() {
+    if (Platform.isAndroid) {
+      return '10.0.2.2';
+    }
+    return 'localhost';
+  }(),
       port: 8080,
       options: const ChannelOptions(
         credentials: ChannelCredentials.insecure(),
@@ -18,7 +25,6 @@ final channelProvider = Provider((ref) {
 final accountClientProvider = Provider((ref) {
   return AccountServiceClient(ref.read(channelProvider));
 });
-
 
 final statusClientProvider = Provider((ref) {
   return StatusServiceClient(ref.read(channelProvider));

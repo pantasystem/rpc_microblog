@@ -26,7 +26,7 @@ class StatusCard extends StatelessWidget {
         children: [
           if (isReblog(status))
             ...[
-              Text("${content.account.name}さんがリポストしました"),
+              Text("${status.account.name}さんがリポストしました"),
               const SizedBox(height: 8),
             ],
           Row(
