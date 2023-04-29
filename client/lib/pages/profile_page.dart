@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:client/pages/components/status_card.dart';
 import 'package:client/providers/repositories.dart';
 import 'package:collection/collection.dart';
@@ -34,7 +36,25 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
           children: [
             AvatarIcon(avatarUrl: profile.avatarUrl),
             Text(profile.name),
-            TextButton(onPressed: () {}, child: relation.valueOrNull?.isFollowing == true ? const Text("Unfollow") : const Text("Follow")),
+            TextButton(onPressed: () {
+              log('フォロー');
+              if (relation.valueOrNull?.isFollowing == true) {
+                ref.read(followRepositoryProvider).delete(accountId: widget.accountId).then((value) async {
+                  ref.refresh(accountRelationFutureFamilyProvider(widget.accountId));
+                  ref.refresh(accountInfoFutureFamilyProvider(widget.accountId));
+                }).catchError((e, st) {
+                  log('error', error: e, stackTrace: st);
+                });
+              } else {
+                ref.read(followRepositoryProvider).create(accountId: widget.accountId).then((value) {
+                  ref.refresh(accountRelationFutureFamilyProvider(widget.accountId));
+                  ref.refresh(accountInfoFutureFamilyProvider(widget.accountId));
+                }).catchError((e, st) {
+                  log('error', error: e, stackTrace: st);
+                });
+              }
+
+            }, child: relation.valueOrNull?.isFollowing == true ? const Text("Unfollow") : const Text("Follow")),
           ],
         ),
         loading: () => const Text("Loading..."),
