@@ -8,6 +8,7 @@ class AccountRepository {
     required this.client,
     required this.authRepository,
   });
+
   final AccountServiceClient client;
   final AuthRepository authRepository;
 
@@ -34,5 +35,17 @@ class AccountRepository {
           "Authorization": "Bearer ${await authRepository.getToken()}"
         }));
     return res;
+  }
+
+  Future<List<Account>> search({required String query}) async {
+    final res = await client.search(
+      SearchAccountRequest(keyword: query),
+      options: CallOptions(
+        metadata: {
+          "Authorization": "Bearer ${await authRepository.getToken()}"
+        },
+      ),
+    );
+    return res.accounts;
   }
 }

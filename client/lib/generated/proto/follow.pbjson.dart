@@ -28,3 +28,44 @@ const UnFollowRequest$json = const {
 
 /// Descriptor for `UnFollowRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List unFollowRequestDescriptor = $convert.base64Decode('Cg9VbkZvbGxvd1JlcXVlc3QSHQoKYWNjb3VudF9pZBgBIAEoCVIJYWNjb3VudElk');
+@$core.Deprecated('Use followsResponseDescriptor instead')
+const FollowsResponse$json = const {
+  '1': 'FollowsResponse',
+  '2': const [
+    const {'1': 'follows', '3': 1, '4': 3, '5': 11, '6': '.Follow', '10': 'follows'},
+  ],
+};
+
+/// Descriptor for `FollowsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List followsResponseDescriptor = $convert.base64Decode('Cg9Gb2xsb3dzUmVzcG9uc2USIQoHZm9sbG93cxgBIAMoCzIHLkZvbGxvd1IHZm9sbG93cw==');
+@$core.Deprecated('Use getFollowsRequestDescriptor instead')
+const GetFollowsRequest$json = const {
+  '1': 'GetFollowsRequest',
+  '2': const [
+    const {'1': 'account_id', '3': 1, '4': 1, '5': 9, '10': 'accountId'},
+  ],
+};
+
+/// Descriptor for `GetFollowsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getFollowsRequestDescriptor = $convert.base64Decode('ChFHZXRGb2xsb3dzUmVxdWVzdBIdCgphY2NvdW50X2lkGAEgASgJUglhY2NvdW50SWQ=');
+@$core.Deprecated('Use getFollowersRequestDescriptor instead')
+const GetFollowersRequest$json = const {
+  '1': 'GetFollowersRequest',
+  '2': const [
+    const {'1': 'account_id', '3': 1, '4': 1, '5': 9, '10': 'accountId'},
+  ],
+};
+
+/// Descriptor for `GetFollowersRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getFollowersRequestDescriptor = $convert.base64Decode('ChNHZXRGb2xsb3dlcnNSZXF1ZXN0Eh0KCmFjY291bnRfaWQYASABKAlSCWFjY291bnRJZA==');
+@$core.Deprecated('Use followDescriptor instead')
+const Follow$json = const {
+  '1': 'Follow',
+  '2': const [
+    const {'1': 'account', '3': 1, '4': 1, '5': 11, '6': '.Account', '10': 'account'},
+    const {'1': 'targetAccount', '3': 2, '4': 1, '5': 11, '6': '.Account', '10': 'targetAccount'},
+  ],
+};
+
+/// Descriptor for `Follow`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List followDescriptor = $convert.base64Decode('CgZGb2xsb3cSIgoHYWNjb3VudBgBIAEoCzIILkFjY291bnRSB2FjY291bnQSLgoNdGFyZ2V0QWNjb3VudBgCIAEoCzIILkFjY291bnRSDXRhcmdldEFjY291bnQ=');

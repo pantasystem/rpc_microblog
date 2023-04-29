@@ -28,10 +28,10 @@ class HomeScreenState extends ConsumerState {
       ),
       body: IndexedStack(
         index: _currentTab.index,
-        children: const [
-          TimelinePage(),
+        children: [
+          const TimelinePage(),
           SearchUserPage(),
-          AccountPage()
+          const AccountPage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

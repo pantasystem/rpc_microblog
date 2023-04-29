@@ -1,5 +1,6 @@
 
 import 'package:client/pages/home_page.dart';
+import 'package:client/pages/profile_page.dart';
 import 'package:client/pages/register_page.dart';
 import 'package:client/pages/splash_page.dart';
 import 'package:client/pages/status_editor_page.dart';
@@ -38,6 +39,15 @@ final routerProvider = Provider((ref) {
           return MaterialPage(
             child: StatusEditorPage(
               replyToId: state.queryParams["replyId"],
+            ),
+          );
+        },
+      ),
+      GoRoute(path: '/profile/:accountId',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ProfilePage(
+              accountId: state.params["accountId"]!,
             ),
           );
         },

@@ -259,6 +259,94 @@ class FindUser extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 }
 
+class SearchAccountRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchAccountRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyword')
+    ..hasRequiredFields = false
+  ;
+
+  SearchAccountRequest._() : super();
+  factory SearchAccountRequest({
+    $core.String? keyword,
+  }) {
+    final _result = create();
+    if (keyword != null) {
+      _result.keyword = keyword;
+    }
+    return _result;
+  }
+  factory SearchAccountRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SearchAccountRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SearchAccountRequest clone() => SearchAccountRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchAccountRequest copyWith(void Function(SearchAccountRequest) updates) => super.copyWith((message) => updates(message as SearchAccountRequest)) as SearchAccountRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SearchAccountRequest create() => SearchAccountRequest._();
+  SearchAccountRequest createEmptyInstance() => create();
+  static $pb.PbList<SearchAccountRequest> createRepeated() => $pb.PbList<SearchAccountRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SearchAccountRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SearchAccountRequest>(create);
+  static SearchAccountRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get keyword => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set keyword($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasKeyword() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKeyword() => clearField(1);
+}
+
+class SearchAccountResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchAccountResponse', createEmptyInstance: create)
+    ..pc<Account>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accounts', $pb.PbFieldType.PM, subBuilder: Account.create)
+    ..hasRequiredFields = false
+  ;
+
+  SearchAccountResponse._() : super();
+  factory SearchAccountResponse({
+    $core.Iterable<Account>? accounts,
+  }) {
+    final _result = create();
+    if (accounts != null) {
+      _result.accounts.addAll(accounts);
+    }
+    return _result;
+  }
+  factory SearchAccountResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SearchAccountResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SearchAccountResponse clone() => SearchAccountResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SearchAccountResponse copyWith(void Function(SearchAccountResponse) updates) => super.copyWith((message) => updates(message as SearchAccountResponse)) as SearchAccountResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SearchAccountResponse create() => SearchAccountResponse._();
+  SearchAccountResponse createEmptyInstance() => create();
+  static $pb.PbList<SearchAccountResponse> createRepeated() => $pb.PbList<SearchAccountResponse>();
+  @$core.pragma('dart2js:noInline')
+  static SearchAccountResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SearchAccountResponse>(create);
+  static SearchAccountResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Account> get accounts => $_getList(0);
+}
+
 class FindMeResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FindMeResponse', createEmptyInstance: create)
     ..aOM<Account>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'account', subBuilder: Account.create)

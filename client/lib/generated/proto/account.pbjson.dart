@@ -63,6 +63,26 @@ const FindUser$json = const {
 
 /// Descriptor for `FindUser`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List findUserDescriptor = $convert.base64Decode('CghGaW5kVXNlchIOCgJpZBgBIAEoCVICaWQ=');
+@$core.Deprecated('Use searchAccountRequestDescriptor instead')
+const SearchAccountRequest$json = const {
+  '1': 'SearchAccountRequest',
+  '2': const [
+    const {'1': 'keyword', '3': 1, '4': 1, '5': 9, '10': 'keyword'},
+  ],
+};
+
+/// Descriptor for `SearchAccountRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchAccountRequestDescriptor = $convert.base64Decode('ChRTZWFyY2hBY2NvdW50UmVxdWVzdBIYCgdrZXl3b3JkGAEgASgJUgdrZXl3b3Jk');
+@$core.Deprecated('Use searchAccountResponseDescriptor instead')
+const SearchAccountResponse$json = const {
+  '1': 'SearchAccountResponse',
+  '2': const [
+    const {'1': 'accounts', '3': 1, '4': 3, '5': 11, '6': '.Account', '10': 'accounts'},
+  ],
+};
+
+/// Descriptor for `SearchAccountResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List searchAccountResponseDescriptor = $convert.base64Decode('ChVTZWFyY2hBY2NvdW50UmVzcG9uc2USJAoIYWNjb3VudHMYASADKAsyCC5BY2NvdW50UghhY2NvdW50cw==');
 @$core.Deprecated('Use findMeResponseDescriptor instead')
 const FindMeResponse$json = const {
   '1': 'FindMeResponse',
