@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:client/pages/components/status_card.dart';
 import 'package:client/providers/repositories.dart';
+import 'package:client/state/timeline_notifier.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,6 +43,7 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
                 ref.read(followRepositoryProvider).delete(accountId: widget.accountId).then((value) async {
                   ref.refresh(accountRelationFutureFamilyProvider(widget.accountId));
                   ref.refresh(accountInfoFutureFamilyProvider(widget.accountId));
+                  ref.read(timelineNotifierProvider).refreshLoad();
                 }).catchError((e, st) {
                   log('error', error: e, stackTrace: st);
                 });
@@ -49,6 +51,7 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
                 ref.read(followRepositoryProvider).create(accountId: widget.accountId).then((value) {
                   ref.refresh(accountRelationFutureFamilyProvider(widget.accountId));
                   ref.refresh(accountInfoFutureFamilyProvider(widget.accountId));
+                  ref.read(timelineNotifierProvider).refreshLoad();
                 }).catchError((e, st) {
                   log('error', error: e, stackTrace: st);
                 });
