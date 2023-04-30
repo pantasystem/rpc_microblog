@@ -48,3 +48,5 @@ test.db
 
 tmp/
 .env
+
+uploads/

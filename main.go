@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -52,6 +54,36 @@ func main() {
 				"message": "pong",
 			})
 		})
+		gr.POST("/uploads", func(c *gin.Context) {
+			// フォームから送信された画像ファイルを取得
+			file, err := c.FormFile("file")
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "画像ファイルを選択してください",
+				})
+				return
+			}
+
+			// 保存するファイル名を生成
+			ext := filepath.Ext(file.Filename)
+			filename := fmt.Sprintf("%d%s", time.Now().Unix(), ext)
+
+			// ローカルに保存するパスを生成
+			savePath := filepath.Join("uploads", filename)
+
+			// 画像ファイルをローカルに保存
+			if err := c.SaveUploadedFile(file, savePath); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error": "画像ファイルの保存に失敗しました",
+				})
+				return
+			}
+
+			c.JSON(http.StatusOK, gin.H{
+				"file": filename,
+			})
+		})
+		gr.Static("/uploads", "./uploads")
 		gr.Run(fmt.Sprintf(":%d", 8081))
 	}()
 
