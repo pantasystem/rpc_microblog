@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -41,6 +43,16 @@ func main() {
 	go func() {
 		fmt.Printf("start gRPC server port: %v", config.Port)
 		s.Serve(listener)
+	}()
+
+	gr := gin.Default()
+	go func() {
+		gr.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "pong",
+			})
+		})
+		gr.Run(fmt.Sprintf(":%d", 8081))
 	}()
 
 	quit := make(chan os.Signal, 1)

@@ -5,6 +5,7 @@ services:
     tty: true
     ports:
       - "8080:8080"
+      - "8081:8081"
     volumes:
       - "./:/go/src/app"
   psql:
@@ -32,3 +33,11 @@ services:
     container_name: redis
     ports:
       - 6379:6379
+#  nginx:
+#     image: nginx:latest
+#     container_name: "nginx"
+#     ports:
+#       - "8083:80"
+#     volumes:
+#       - ./default.conf:/etc/nginx/nginx.conf
+#     restart: always
