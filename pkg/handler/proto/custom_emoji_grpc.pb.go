@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomEmojiServiceClient interface {
 	GetCustomEmojis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CustomEmojis, error)
+	CreateCustomEmoji(ctx context.Context, in *CreateCustomEmojiRequest, opts ...grpc.CallOption) (*CustomEmoji, error)
 }
 
 type customEmojiServiceClient struct {
@@ -39,11 +40,21 @@ func (c *customEmojiServiceClient) GetCustomEmojis(ctx context.Context, in *empt
 	return out, nil
 }
 
+func (c *customEmojiServiceClient) CreateCustomEmoji(ctx context.Context, in *CreateCustomEmojiRequest, opts ...grpc.CallOption) (*CustomEmoji, error) {
+	out := new(CustomEmoji)
+	err := c.cc.Invoke(ctx, "/CustomEmojiService/CreateCustomEmoji", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CustomEmojiServiceServer is the server API for CustomEmojiService service.
 // All implementations must embed UnimplementedCustomEmojiServiceServer
 // for forward compatibility
 type CustomEmojiServiceServer interface {
 	GetCustomEmojis(context.Context, *emptypb.Empty) (*CustomEmojis, error)
+	CreateCustomEmoji(context.Context, *CreateCustomEmojiRequest) (*CustomEmoji, error)
 	mustEmbedUnimplementedCustomEmojiServiceServer()
 }
 
@@ -53,6 +64,9 @@ type UnimplementedCustomEmojiServiceServer struct {
 
 func (UnimplementedCustomEmojiServiceServer) GetCustomEmojis(context.Context, *emptypb.Empty) (*CustomEmojis, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCustomEmojis not implemented")
+}
+func (UnimplementedCustomEmojiServiceServer) CreateCustomEmoji(context.Context, *CreateCustomEmojiRequest) (*CustomEmoji, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomEmoji not implemented")
 }
 func (UnimplementedCustomEmojiServiceServer) mustEmbedUnimplementedCustomEmojiServiceServer() {}
 
@@ -85,6 +99,24 @@ func _CustomEmojiService_GetCustomEmojis_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomEmojiService_CreateCustomEmoji_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCustomEmojiRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomEmojiServiceServer).CreateCustomEmoji(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/CustomEmojiService/CreateCustomEmoji",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomEmojiServiceServer).CreateCustomEmoji(ctx, req.(*CreateCustomEmojiRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CustomEmojiService_ServiceDesc is the grpc.ServiceDesc for CustomEmojiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -95,6 +127,10 @@ var CustomEmojiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCustomEmojis",
 			Handler:    _CustomEmojiService_GetCustomEmojis_Handler,
+		},
+		{
+			MethodName: "CreateCustomEmoji",
+			Handler:    _CustomEmojiService_CreateCustomEmoji_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

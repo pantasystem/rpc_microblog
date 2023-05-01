@@ -15,6 +15,11 @@ message CustomEmojis {
     repeated CustomEmoji emojis = 1;
 }
 
+message CreateCustomEmojiRequest {
+    string name = 1;
+    string filename = 2;
+}
 service CustomEmojiService {
     rpc GetCustomEmojis (google.protobuf.Empty) returns (CustomEmojis) {}
+    rpc CreateCustomEmoji(CreateCustomEmojiRequest) returns (CustomEmoji) {}
 }

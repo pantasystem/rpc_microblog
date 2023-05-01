@@ -10,7 +10,7 @@ import (
 type CustomEmoji struct {
 	Id        uuid.UUID `gorm:"primaryKey"`
 	Type      string    `gorm:"type:varchar(255)"`
-	EmojiUrl  string    `gorm:"type:varchar(255)"`
+	EmojiPath string    `gorm:"type:varchar(255)"`
 	Width     int
 	Height    int
 	CreatedAt time.Time

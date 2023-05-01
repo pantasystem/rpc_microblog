@@ -140,7 +140,7 @@ func ConvertToProtoModel(s *entity.Status, myId *uuid.UUID) *proto.Status {
 
 		}
 		if r.CustomEmoji != nil {
-			c.EmojiUrl = &r.CustomEmoji.EmojiUrl
+			c.EmojiUrl = &r.CustomEmoji.EmojiPath
 			h := int32(r.CustomEmoji.Height)
 			c.EmojiHeight = &h
 			w := int32(r.CustomEmoji.Width)

@@ -12,6 +12,12 @@ func (r *Module) FollowService() *FollowService {
 	}
 }
 
+func (r *Module) CustomEmojiService() *CustomEmojiService {
+	return &CustomEmojiService{
+		CR: r.RepositoryModule.CustomEmojiRepository(),
+	}
+}
+
 func (r *Module) AccountRelationshipService() *AccountRelationshipService {
 	return &AccountRelationshipService{
 		AR: r.RepositoryModule.AccountRepository(),
