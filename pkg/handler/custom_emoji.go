@@ -26,7 +26,7 @@ func (r *CustomEmojiService) GetCustomEmojis(ctx context.Context, req *emptypb.E
 	for _, emoji := range emojis {
 		protoEmojis.Emojis = append(protoEmojis.Emojis, &proto.CustomEmoji{
 			Id:       emoji.Id.String(),
-			Type:     emoji.Type,
+			Type:     emoji.Name,
 			EmojiUrl: emoji.EmojiPath,
 			Width:    int32(emoji.Width),
 			Height:   int32(emoji.Height),
@@ -42,7 +42,7 @@ func (r *CustomEmojiService) CreateCustomEmoji(ctx context.Context, req *proto.C
 	}
 	return &proto.CustomEmoji{
 		Id:       c.Id.String(),
-		Type:     c.Type,
+		Type:     c.Name,
 		EmojiUrl: c.EmojiPath,
 		Width:    int32(c.Width),
 		Height:   int32(c.Height),

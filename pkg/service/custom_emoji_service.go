@@ -23,7 +23,7 @@ func (r *CustomEmojiService) Create(ctx context.Context, emojiName string, filen
 	}
 
 	customEmoji := entity.CustomEmoji{
-		Type:      emojiName,
+		Name:      emojiName,
 		EmojiPath: emojiPath,
 	}
 
