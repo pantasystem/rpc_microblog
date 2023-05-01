@@ -12,12 +12,12 @@ type CustomEmojiRepositoryImpl struct {
 }
 
 func (r *CustomEmojiRepositoryImpl) FindAll(ctx context.Context) ([]*entity.CustomEmoji, error) {
-	var emojis *[]*entity.CustomEmoji
-	result := r.Db.Find(emojis)
+	var emojis []*entity.CustomEmoji
+	result := r.Db.Find(&emojis)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return *emojis, nil
+	return emojis, nil
 }
 
 func (r *CustomEmojiRepositoryImpl) Create(ctx context.Context, customEmoji *entity.CustomEmoji) (*entity.CustomEmoji, error) {

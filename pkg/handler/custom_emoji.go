@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 	"systems.panta/rpc-microblog/pkg/handler/proto"
@@ -16,6 +17,7 @@ type CustomEmojiService struct {
 func (r *CustomEmojiService) GetCustomEmojis(ctx context.Context, req *emptypb.Empty) (*proto.CustomEmojis, error) {
 	emojis, err := r.Module.RepositoryModule().CustomEmojiRepository().FindAll(ctx)
 	if err != nil {
+		fmt.Printf("カスタム絵文字の取得に失敗 %s\n", err)
 		return nil, err
 	}
 
