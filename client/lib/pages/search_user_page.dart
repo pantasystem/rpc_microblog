@@ -11,7 +11,7 @@ class SearchUserPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accounts = ref.watch(_searchUsersFutureFamilyProvider(_searchController.text));
+    final accounts = ref.watch(_searchUsersFutureFamilyProvider(ref.watch(_keywordStateProvider)));
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -23,6 +23,9 @@ class SearchUserPage extends ConsumerWidget {
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
             ),
+            onChanged: (v) {
+              ref.read(_keywordStateProvider.notifier).state = v;
+            },
           ),
           Expanded(
             child: accounts.when(
@@ -60,3 +63,5 @@ class SearchUserPage extends ConsumerWidget {
 final _searchUsersFutureFamilyProvider = FutureProvider.family((ref, String query) async {
   return ref.read(accountRepositoryProvider).search(query: query);
 });
+
+final _keywordStateProvider = StateProvider((ref) => "");
