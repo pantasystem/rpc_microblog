@@ -7,6 +7,9 @@ message Account {
     string id = 1;
     string name = 2;
     string avatar_url = 3;
+    int64 follower_count = 4;
+    int64 following_count = 5;
+    int64 post_count = 6;
 }
 
 message CreateAccountRequest {
