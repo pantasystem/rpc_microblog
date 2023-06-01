@@ -31,9 +31,12 @@ func (r *AccountService) CreateAccount(ctx context.Context, req *proto.CreateAcc
 	return &proto.CreateAccountResponse{
 		Token: a.Token.String(),
 		Account: &proto.Account{
-			Id:        a.Id.String(),
-			Name:      a.Name,
-			AvatarUrl: *a.AvatarUrl,
+			Id:             a.Id.String(),
+			Name:           a.Name,
+			AvatarUrl:      *a.AvatarUrl,
+			FollowerCount:  a.FollowerCount,
+			FollowingCount: a.FollowingCount,
+			PostCount:      a.PostCount,
 		},
 	}, nil
 }
@@ -44,9 +47,12 @@ func (r *AccountService) Find(ctx context.Context, req *proto.FindUser) (*proto.
 		return nil, err
 	}
 	return &proto.Account{
-		Id:        a.Id.String(),
-		Name:      a.Name,
-		AvatarUrl: *a.AvatarUrl,
+		Id:             a.Id.String(),
+		Name:           a.Name,
+		AvatarUrl:      *a.AvatarUrl,
+		FollowerCount:  a.FollowerCount,
+		FollowingCount: a.FollowingCount,
+		PostCount:      a.PostCount,
 	}, nil
 }
 
@@ -76,9 +82,12 @@ func (r *AccountService) FindMe(ctx context.Context, req *emptypb.Empty) (*proto
 
 	return &proto.FindMeResponse{
 		Account: &proto.Account{
-			Id:        a.Id.String(),
-			Name:      a.Name,
-			AvatarUrl: *a.AvatarUrl,
+			Id:             a.Id.String(),
+			Name:           a.Name,
+			AvatarUrl:      *a.AvatarUrl,
+			FollowerCount:  a.FollowerCount,
+			FollowingCount: a.FollowingCount,
+			PostCount:      a.PostCount,
 		},
 		AuthState: proto.AuthState_AUTHENTICATED,
 	}, nil
@@ -92,9 +101,12 @@ func (r *AccountService) Search(ctx context.Context, req *proto.SearchAccountReq
 	var res []*proto.Account
 	for _, a := range accounts {
 		res = append(res, &proto.Account{
-			Id:        a.Id.String(),
-			Name:      a.Name,
-			AvatarUrl: *a.AvatarUrl,
+			Id:             a.Id.String(),
+			Name:           a.Name,
+			AvatarUrl:      *a.AvatarUrl,
+			FollowerCount:  a.FollowerCount,
+			FollowingCount: a.FollowingCount,
+			PostCount:      a.PostCount,
 		})
 	}
 	return &proto.SearchAccountResponse{

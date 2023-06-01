@@ -124,9 +124,12 @@ func ConvertToProtoModel(s *entity.Status, myId *uuid.UUID) *proto.Status {
 
 	if s.Account != nil {
 		p.Account = &proto.Account{
-			Id:        s.Account.Id.String(),
-			AvatarUrl: *s.Account.AvatarUrl,
-			Name:      s.Account.Name,
+			Id:             s.Account.Id.String(),
+			AvatarUrl:      *s.Account.AvatarUrl,
+			Name:           s.Account.Name,
+			FollowerCount:  s.Account.FollowerCount,
+			FollowingCount: s.Account.FollowingCount,
+			PostCount:      s.Account.PostCount,
 		}
 	}
 

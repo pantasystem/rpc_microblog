@@ -80,14 +80,20 @@ func (r *FollowService) GetFollows(ctx context.Context, req *proto.GetFollowsReq
 	for i, f := range follows {
 		protoFollows[i] = &proto.Follow{
 			TargetAccount: &proto.Account{
-				Id:        f.TargetAccount.Id.String(),
-				Name:      f.TargetAccount.Name,
-				AvatarUrl: *f.TargetAccount.AvatarUrl,
+				Id:             f.TargetAccount.Id.String(),
+				Name:           f.TargetAccount.Name,
+				AvatarUrl:      *f.TargetAccount.AvatarUrl,
+				FollowerCount:  f.TargetAccount.FollowerCount,
+				FollowingCount: f.TargetAccount.FollowingCount,
+				PostCount:      f.TargetAccount.PostCount,
 			},
 			Account: &proto.Account{
-				Id:        f.Account.Id.String(),
-				Name:      f.Account.Name,
-				AvatarUrl: *f.Account.AvatarUrl,
+				Id:             f.Account.Id.String(),
+				Name:           f.Account.Name,
+				AvatarUrl:      *f.Account.AvatarUrl,
+				FollowerCount:  f.Account.FollowerCount,
+				FollowingCount: f.Account.FollowingCount,
+				PostCount:      f.Account.PostCount,
 			},
 		}
 	}
@@ -110,14 +116,20 @@ func (r *FollowService) GetFollowers(ctx context.Context, req *proto.GetFollower
 	for i, f := range followers {
 		protoFollowers[i] = &proto.Follow{
 			TargetAccount: &proto.Account{
-				Id:        f.TargetAccount.Id.String(),
-				Name:      f.TargetAccount.Name,
-				AvatarUrl: *f.TargetAccount.AvatarUrl,
+				Id:             f.TargetAccount.Id.String(),
+				Name:           f.TargetAccount.Name,
+				AvatarUrl:      *f.TargetAccount.AvatarUrl,
+				FollowerCount:  f.TargetAccount.FollowerCount,
+				FollowingCount: f.TargetAccount.FollowingCount,
+				PostCount:      f.TargetAccount.PostCount,
 			},
 			Account: &proto.Account{
-				Id:        f.Account.Id.String(),
-				Name:      f.Account.Name,
-				AvatarUrl: *f.Account.AvatarUrl,
+				Id:             f.Account.Id.String(),
+				Name:           f.Account.Name,
+				AvatarUrl:      *f.Account.AvatarUrl,
+				FollowerCount:  f.Account.FollowerCount,
+				FollowingCount: f.Account.FollowingCount,
+				PostCount:      f.Account.PostCount,
 			},
 		}
 	}
