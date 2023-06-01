@@ -21,11 +21,25 @@ func (r *StatusRepositoryImpl) Create(ctx context.Context, status *entity.Status
 	if result.Error != nil {
 		return nil, result.Error
 	}
+	result = r.Db.Model(&entity.Account{}).
+		Where("id = ?", status.AccountId).
+		Update("post_count", gorm.Expr("post_count + ?", 1))
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
 	return r.FindById(ctx, status.Id)
 }
 
 func (r *StatusRepositoryImpl) Delete(ctx context.Context, status *entity.Status) error {
 	result := r.Db.Delete(&entity.Status{}, status.Id)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	result = r.Db.Model(&entity.Account{}).
+		Where("id = ?", status.AccountId).
+		Update("post_count", gorm.Expr("post_count - ?", 1))
 	if result.Error != nil {
 		return result.Error
 	}

@@ -20,12 +20,35 @@ func (r *FollowRepositoryImpl) Create(ctx context.Context, f *entity.Follow) (*e
 		fmt.Printf("create follow error: %+v\n", result.Error)
 		return nil, result.Error
 	}
+	result = r.Db.Model(&entity.Account{}).Where("id = ?", f.AccountId).
+		Update("following_count", gorm.Expr("following_count + ?", 1))
+	if result.Error != nil {
+		fmt.Printf("update following count error: %+v\n", result.Error)
+		return nil, result.Error
+	}
+	result = r.Db.Model(&entity.Account{}).Where("id = ?", f.TargetAccountId).
+		Update("follower_count", gorm.Expr("follower_count + ?", 1))
+	if result.Error != nil {
+		fmt.Printf("update follower count error: %+v\n", result.Error)
+		return nil, result.Error
+	}
+
 	fmt.Printf("follow created: %+v\n", f)
 	return r.FindById(ctx, f.Id)
 }
 
 func (r *FollowRepositoryImpl) Delete(ctx context.Context, f *entity.Follow) error {
 	result := r.Db.Delete(&entity.Follow{}, f.Id)
+	if result.Error != nil {
+		return result.Error
+	}
+	result = r.Db.Model(&entity.Account{}).Where("id = ?", f.AccountId).
+		Update("following_count", gorm.Expr("following_count - ?", 1))
+	if result.Error != nil {
+		return result.Error
+	}
+	result = r.Db.Model(&entity.Account{}).Where("id = ?", f.TargetAccountId).
+		Update("follower_count", gorm.Expr("follower_count - ?", 1))
 	if result.Error != nil {
 		return result.Error
 	}

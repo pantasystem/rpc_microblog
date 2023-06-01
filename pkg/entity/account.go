@@ -8,12 +8,15 @@ import (
 )
 
 type Account struct {
-	Id        uuid.UUID `gorm:"primaryKey"`
-	Name      string
-	AvatarUrl *string   `gorm:"default:null"`
-	Token     uuid.UUID `gorm:"uniqueIndex"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	Id             uuid.UUID `gorm:"primaryKey"`
+	Name           string
+	AvatarUrl      *string   `gorm:"default:null"`
+	Token          uuid.UUID `gorm:"uniqueIndex"`
+	FollowerCount  int64     `gorm:"default:0"`
+	FollowingCount int64     `gorm:"default:0"`
+	PostCount      int64     `gorm:"default:0"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
 func NewAccount(name string, avatarUrl string) *Account {
