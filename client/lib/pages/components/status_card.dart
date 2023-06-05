@@ -118,13 +118,14 @@ class ActionButtons extends StatelessWidget {
 
 class AvatarIcon extends StatelessWidget {
   final String avatarUrl;
+  final double radius;
 
-  const AvatarIcon({super.key, required this.avatarUrl});
+  const AvatarIcon({super.key, required this.avatarUrl, this.radius = 28});
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 28,
+      radius: radius,
       backgroundImage: NetworkImage(avatarUrl),
     );
   }
