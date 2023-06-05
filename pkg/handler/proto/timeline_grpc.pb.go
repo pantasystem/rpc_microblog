@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TimelineServiceClient interface {
 	GetTimeline(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
+	GetAccountTImeline(ctx context.Context, in *AccountTimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
 }
 
 type timelineServiceClient struct {
@@ -38,11 +39,21 @@ func (c *timelineServiceClient) GetTimeline(ctx context.Context, in *TimelineReq
 	return out, nil
 }
 
+func (c *timelineServiceClient) GetAccountTImeline(ctx context.Context, in *AccountTimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error) {
+	out := new(TimelineResponse)
+	err := c.cc.Invoke(ctx, "/TimelineService/GetAccountTImeline", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TimelineServiceServer is the server API for TimelineService service.
 // All implementations must embed UnimplementedTimelineServiceServer
 // for forward compatibility
 type TimelineServiceServer interface {
 	GetTimeline(context.Context, *TimelineRequest) (*TimelineResponse, error)
+	GetAccountTImeline(context.Context, *AccountTimelineRequest) (*TimelineResponse, error)
 	mustEmbedUnimplementedTimelineServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedTimelineServiceServer struct {
 
 func (UnimplementedTimelineServiceServer) GetTimeline(context.Context, *TimelineRequest) (*TimelineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTimeline not implemented")
+}
+func (UnimplementedTimelineServiceServer) GetAccountTImeline(context.Context, *AccountTimelineRequest) (*TimelineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountTImeline not implemented")
 }
 func (UnimplementedTimelineServiceServer) mustEmbedUnimplementedTimelineServiceServer() {}
 
@@ -84,6 +98,24 @@ func _TimelineService_GetTimeline_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TimelineService_GetAccountTImeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountTimelineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimelineServiceServer).GetAccountTImeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/TimelineService/GetAccountTImeline",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimelineServiceServer).GetAccountTImeline(ctx, req.(*AccountTimelineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TimelineService_ServiceDesc is the grpc.ServiceDesc for TimelineService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var TimelineService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTimeline",
 			Handler:    _TimelineService_GetTimeline_Handler,
+		},
+		{
+			MethodName: "GetAccountTImeline",
+			Handler:    _TimelineService_GetAccountTImeline_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

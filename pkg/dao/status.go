@@ -108,3 +108,50 @@ func (r *StatusRepositoryImpl) FindByFollowedAccount(ctx context.Context, accoun
 	fmt.Printf("rdbからの取得に成功しました\n")
 	return statuses, nil
 }
+
+func (r *StatusRepositoryImpl) FindByAccountId(ctx context.Context, accountId uuid.UUID, query *repository.FindByAccountQuery) ([]*entity.Status, error) {
+	var statuses []*entity.Status
+	fmt.Printf("query: %+v\n", query)
+
+	var statusByMaxId *entity.Status
+	var statusByMinId *entity.Status
+	if query.MaxId != nil {
+		res := r.Db.First(&statusByMaxId, query.MaxId)
+		if res.Error != nil && !errors.Is(res.Error, gorm.ErrRecordNotFound) {
+			fmt.Printf("fetch status filter by maxId: %+v\n", res.Error)
+			return nil, res.Error
+		}
+	}
+	if query.MinId != nil {
+		res := r.Db.First(&statusByMinId, "id = ?", query.MinId)
+		if res.Error != nil && !errors.Is(res.Error, gorm.ErrRecordNotFound) {
+			fmt.Printf("error: %+v\n", res.Error)
+			return nil, res.Error
+		}
+	}
+	q := r.Db.Model(&entity.Status{}).
+		Where("statuses.account_id = ?", accountId)
+
+	if statusByMaxId != nil {
+		q = q.Where("statuses.created_at < ?", statusByMaxId.CreatedAt)
+	}
+	if statusByMinId != nil {
+		q = q.Where("statuses.created_at > ?", statusByMinId.CreatedAt)
+	}
+
+	res := q.Preload("Reactions.CustomEmoji").
+		Preload("Reblog.Account").
+		Preload("Reply.Account").
+		Preload("Reblog.Reactions").
+		Preload("Reply.Reactions").
+		Preload(clause.Associations).
+		Order("statuses.created_at DESC").
+		Limit(20).Find(&statuses)
+	if res.Error != nil {
+		fmt.Printf("error: %+v\n", res.Error)
+		return nil, res.Error
+	}
+
+	fmt.Printf("rdbからの取得に成功しました\n")
+	return statuses, nil
+}

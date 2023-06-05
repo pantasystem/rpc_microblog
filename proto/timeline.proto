@@ -15,6 +15,13 @@ message TimelineResponse {
     optional string next_max_id = 3;
 }
 
+message AccountTimelineRequest {
+    string account_id = 1;
+    optional string min_id = 2;
+    optional string max_id = 3;
+}
+
 service TimelineService {
     rpc GetTimeline(TimelineRequest) returns (TimelineResponse);
+    rpc GetAccountTImeline(AccountTimelineRequest) returns (TimelineResponse);
 }
