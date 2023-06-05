@@ -94,11 +94,34 @@ class ProfilePageHeader extends StatelessWidget {
               onPressed: onToggleFollow,
               child: () {
                 if (relationship?.isFollowing == true) {
-                  return Text("フォロー解除");
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.person_remove),
+                      SizedBox(width: 16,),
+                      Text("フォロー解除")
+                    ],
+                  );
                 } else {
-                  return Text("フォロー");
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.person_add),
+                      SizedBox(width: 16,),
+                      Text("フォロー")
+                    ],
+                  );
                 }
               }(),
+            ),
+            const SizedBox(height: 8,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                  Text("投稿数: ${account.postCount}",),
+                  Text("フォロー中: ${account.followingCount}"),
+                  Text("フォロワー: ${account.followerCount}"),
+              ],
             )
           ],
         ),

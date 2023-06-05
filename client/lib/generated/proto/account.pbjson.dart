@@ -26,11 +26,14 @@ const Account$json = const {
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'avatar_url', '3': 3, '4': 1, '5': 9, '10': 'avatarUrl'},
+    const {'1': 'follower_count', '3': 4, '4': 1, '5': 3, '10': 'followerCount'},
+    const {'1': 'following_count', '3': 5, '4': 1, '5': 3, '10': 'followingCount'},
+    const {'1': 'post_count', '3': 6, '4': 1, '5': 3, '10': 'postCount'},
   ],
 };
 
 /// Descriptor for `Account`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountDescriptor = $convert.base64Decode('CgdBY2NvdW50Eg4KAmlkGAEgASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEh0KCmF2YXRhcl91cmwYAyABKAlSCWF2YXRhclVybA==');
+final $typed_data.Uint8List accountDescriptor = $convert.base64Decode('CgdBY2NvdW50Eg4KAmlkGAEgASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEh0KCmF2YXRhcl91cmwYAyABKAlSCWF2YXRhclVybBIlCg5mb2xsb3dlcl9jb3VudBgEIAEoA1INZm9sbG93ZXJDb3VudBInCg9mb2xsb3dpbmdfY291bnQYBSABKANSDmZvbGxvd2luZ0NvdW50Eh0KCnBvc3RfY291bnQYBiABKANSCXBvc3RDb3VudA==');
 @$core.Deprecated('Use createAccountRequestDescriptor instead')
 const CreateAccountRequest$json = const {
   '1': 'CreateAccountRequest',

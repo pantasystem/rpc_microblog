@@ -153,3 +153,64 @@ class CustomEmojis extends $pb.GeneratedMessage {
   $core.List<CustomEmoji> get emojis => $_getList(0);
 }
 
+class CreateCustomEmojiRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateCustomEmojiRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filename')
+    ..hasRequiredFields = false
+  ;
+
+  CreateCustomEmojiRequest._() : super();
+  factory CreateCustomEmojiRequest({
+    $core.String? name,
+    $core.String? filename,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (filename != null) {
+      _result.filename = filename;
+    }
+    return _result;
+  }
+  factory CreateCustomEmojiRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CreateCustomEmojiRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CreateCustomEmojiRequest clone() => CreateCustomEmojiRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CreateCustomEmojiRequest copyWith(void Function(CreateCustomEmojiRequest) updates) => super.copyWith((message) => updates(message as CreateCustomEmojiRequest)) as CreateCustomEmojiRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CreateCustomEmojiRequest create() => CreateCustomEmojiRequest._();
+  CreateCustomEmojiRequest createEmptyInstance() => create();
+  static $pb.PbList<CreateCustomEmojiRequest> createRepeated() => $pb.PbList<CreateCustomEmojiRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CreateCustomEmojiRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CreateCustomEmojiRequest>(create);
+  static CreateCustomEmojiRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get filename => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set filename($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFilename() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFilename() => clearField(2);
+}
+

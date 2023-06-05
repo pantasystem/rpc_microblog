@@ -32,3 +32,14 @@ const CustomEmojis$json = const {
 
 /// Descriptor for `CustomEmojis`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List customEmojisDescriptor = $convert.base64Decode('CgxDdXN0b21FbW9qaXMSJAoGZW1vamlzGAEgAygLMgwuQ3VzdG9tRW1vamlSBmVtb2ppcw==');
+@$core.Deprecated('Use createCustomEmojiRequestDescriptor instead')
+const CreateCustomEmojiRequest$json = const {
+  '1': 'CreateCustomEmojiRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'filename', '3': 2, '4': 1, '5': 9, '10': 'filename'},
+  ],
+};
+
+/// Descriptor for `CreateCustomEmojiRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List createCustomEmojiRequestDescriptor = $convert.base64Decode('ChhDcmVhdGVDdXN0b21FbW9qaVJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZRIaCghmaWxlbmFtZRgCIAEoCVIIZmlsZW5hbWU=');

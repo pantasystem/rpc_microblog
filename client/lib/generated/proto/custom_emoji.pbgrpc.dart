@@ -20,6 +20,11 @@ class CustomEmojiServiceClient extends $grpc.Client {
           '/CustomEmojiService/GetCustomEmojis',
           ($0.Empty value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.CustomEmojis.fromBuffer(value));
+  static final _$createCustomEmoji =
+      $grpc.ClientMethod<$1.CreateCustomEmojiRequest, $1.CustomEmoji>(
+          '/CustomEmojiService/CreateCustomEmoji',
+          ($1.CreateCustomEmojiRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.CustomEmoji.fromBuffer(value));
 
   CustomEmojiServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -29,6 +34,12 @@ class CustomEmojiServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.CustomEmojis> getCustomEmojis($0.Empty request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getCustomEmojis, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.CustomEmoji> createCustomEmoji(
+      $1.CreateCustomEmojiRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$createCustomEmoji, request, options: options);
   }
 }
 
@@ -43,6 +54,14 @@ abstract class CustomEmojiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($1.CustomEmojis value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CreateCustomEmojiRequest, $1.CustomEmoji>(
+        'CreateCustomEmoji',
+        createCustomEmoji_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.CreateCustomEmojiRequest.fromBuffer(value),
+        ($1.CustomEmoji value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.CustomEmojis> getCustomEmojis_Pre(
@@ -50,6 +69,13 @@ abstract class CustomEmojiServiceBase extends $grpc.Service {
     return getCustomEmojis(call, await request);
   }
 
+  $async.Future<$1.CustomEmoji> createCustomEmoji_Pre($grpc.ServiceCall call,
+      $async.Future<$1.CreateCustomEmojiRequest> request) async {
+    return createCustomEmoji(call, await request);
+  }
+
   $async.Future<$1.CustomEmojis> getCustomEmojis(
       $grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$1.CustomEmoji> createCustomEmoji(
+      $grpc.ServiceCall call, $1.CreateCustomEmojiRequest request);
 }

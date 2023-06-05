@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'account.pbenum.dart';
@@ -18,6 +19,9 @@ class Account extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'followerCount')
+    ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'followingCount')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'postCount')
     ..hasRequiredFields = false
   ;
 
@@ -26,6 +30,9 @@ class Account extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? name,
     $core.String? avatarUrl,
+    $fixnum.Int64? followerCount,
+    $fixnum.Int64? followingCount,
+    $fixnum.Int64? postCount,
   }) {
     final _result = create();
     if (id != null) {
@@ -36,6 +43,15 @@ class Account extends $pb.GeneratedMessage {
     }
     if (avatarUrl != null) {
       _result.avatarUrl = avatarUrl;
+    }
+    if (followerCount != null) {
+      _result.followerCount = followerCount;
+    }
+    if (followingCount != null) {
+      _result.followingCount = followingCount;
+    }
+    if (postCount != null) {
+      _result.postCount = postCount;
     }
     return _result;
   }
@@ -86,6 +102,33 @@ class Account extends $pb.GeneratedMessage {
   $core.bool hasAvatarUrl() => $_has(2);
   @$pb.TagNumber(3)
   void clearAvatarUrl() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get followerCount => $_getI64(3);
+  @$pb.TagNumber(4)
+  set followerCount($fixnum.Int64 v) { $_setInt64(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasFollowerCount() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearFollowerCount() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get followingCount => $_getI64(4);
+  @$pb.TagNumber(5)
+  set followingCount($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasFollowingCount() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearFollowingCount() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get postCount => $_getI64(5);
+  @$pb.TagNumber(6)
+  set postCount($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPostCount() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPostCount() => clearField(6);
 }
 
 class CreateAccountRequest extends $pb.GeneratedMessage {
