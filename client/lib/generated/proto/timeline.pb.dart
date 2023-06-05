@@ -141,3 +141,78 @@ class TimelineResponse extends $pb.GeneratedMessage {
   void clearNextMaxId() => clearField(3);
 }
 
+class AccountTimelineRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AccountTimelineRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accountId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxId')
+    ..hasRequiredFields = false
+  ;
+
+  AccountTimelineRequest._() : super();
+  factory AccountTimelineRequest({
+    $core.String? accountId,
+    $core.String? minId,
+    $core.String? maxId,
+  }) {
+    final _result = create();
+    if (accountId != null) {
+      _result.accountId = accountId;
+    }
+    if (minId != null) {
+      _result.minId = minId;
+    }
+    if (maxId != null) {
+      _result.maxId = maxId;
+    }
+    return _result;
+  }
+  factory AccountTimelineRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AccountTimelineRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AccountTimelineRequest clone() => AccountTimelineRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AccountTimelineRequest copyWith(void Function(AccountTimelineRequest) updates) => super.copyWith((message) => updates(message as AccountTimelineRequest)) as AccountTimelineRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AccountTimelineRequest create() => AccountTimelineRequest._();
+  AccountTimelineRequest createEmptyInstance() => create();
+  static $pb.PbList<AccountTimelineRequest> createRepeated() => $pb.PbList<AccountTimelineRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AccountTimelineRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AccountTimelineRequest>(create);
+  static AccountTimelineRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get accountId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set accountId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAccountId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAccountId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get minId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set minId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMinId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMinId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get maxId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set maxId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMaxId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMaxId() => clearField(3);
+}
+

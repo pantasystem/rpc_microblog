@@ -39,3 +39,19 @@ const TimelineResponse$json = const {
 
 /// Descriptor for `TimelineResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List timelineResponseDescriptor = $convert.base64Decode('ChBUaW1lbGluZVJlc3BvbnNlEiMKCHN0YXR1c2VzGAEgAygLMgcuU3RhdHVzUghzdGF0dXNlcxIjCgtuZXh0X21pbl9pZBgCIAEoCUgAUgluZXh0TWluSWSIAQESIwoLbmV4dF9tYXhfaWQYAyABKAlIAVIJbmV4dE1heElkiAEBQg4KDF9uZXh0X21pbl9pZEIOCgxfbmV4dF9tYXhfaWQ=');
+@$core.Deprecated('Use accountTimelineRequestDescriptor instead')
+const AccountTimelineRequest$json = const {
+  '1': 'AccountTimelineRequest',
+  '2': const [
+    const {'1': 'account_id', '3': 1, '4': 1, '5': 9, '10': 'accountId'},
+    const {'1': 'min_id', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'minId', '17': true},
+    const {'1': 'max_id', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'maxId', '17': true},
+  ],
+  '8': const [
+    const {'1': '_min_id'},
+    const {'1': '_max_id'},
+  ],
+};
+
+/// Descriptor for `AccountTimelineRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List accountTimelineRequestDescriptor = $convert.base64Decode('ChZBY2NvdW50VGltZWxpbmVSZXF1ZXN0Eh0KCmFjY291bnRfaWQYASABKAlSCWFjY291bnRJZBIaCgZtaW5faWQYAiABKAlIAFIFbWluSWSIAQESGgoGbWF4X2lkGAMgASgJSAFSBW1heElkiAEBQgkKB19taW5faWRCCQoHX21heF9pZA==');

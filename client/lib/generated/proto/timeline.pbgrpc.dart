@@ -20,6 +20,12 @@ class TimelineServiceClient extends $grpc.Client {
           ($3.TimelineRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $3.TimelineResponse.fromBuffer(value));
+  static final _$getAccountTimeline =
+      $grpc.ClientMethod<$3.AccountTimelineRequest, $3.TimelineResponse>(
+          '/TimelineService/GetAccountTimeline',
+          ($3.AccountTimelineRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $3.TimelineResponse.fromBuffer(value));
 
   TimelineServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -30,6 +36,12 @@ class TimelineServiceClient extends $grpc.Client {
       $3.TimelineRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTimeline, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$3.TimelineResponse> getAccountTimeline(
+      $3.AccountTimelineRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getAccountTimeline, request, options: options);
   }
 }
 
@@ -44,6 +56,15 @@ abstract class TimelineServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $3.TimelineRequest.fromBuffer(value),
         ($3.TimelineResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$3.AccountTimelineRequest, $3.TimelineResponse>(
+            'GetAccountTimeline',
+            getAccountTimeline_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $3.AccountTimelineRequest.fromBuffer(value),
+            ($3.TimelineResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$3.TimelineResponse> getTimeline_Pre(
@@ -51,6 +72,14 @@ abstract class TimelineServiceBase extends $grpc.Service {
     return getTimeline(call, await request);
   }
 
+  $async.Future<$3.TimelineResponse> getAccountTimeline_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$3.AccountTimelineRequest> request) async {
+    return getAccountTimeline(call, await request);
+  }
+
   $async.Future<$3.TimelineResponse> getTimeline(
       $grpc.ServiceCall call, $3.TimelineRequest request);
+  $async.Future<$3.TimelineResponse> getAccountTimeline(
+      $grpc.ServiceCall call, $3.AccountTimelineRequest request);
 }

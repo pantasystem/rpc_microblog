@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:client/generated/proto/account.pb.dart';
 import 'package:client/generated/proto/account_relationship.pbgrpc.dart';
 import 'package:client/pages/components/status_card.dart';
+import 'package:client/pages/profile_timeline_page.dart';
 import 'package:client/providers/repositories.dart';
+import 'package:client/state/account_timeline_notifier.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +28,7 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
         ref.watch(accountInfoFutureFamilyProvider(widget.accountId));
     final relation =
         ref.watch(accountRelationFutureFamilyProvider(widget.accountId));
+    ref.watch(accountTimelineNotifierProvider(widget.accountId));
     return Scaffold(
       appBar: AppBar(
         title: Text(profile.when(
@@ -51,6 +54,7 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
             loading: () => const Text("Loading..."),
             error: (error, stackTrace) => const Text("Error"),
           ),
+          ProfileTimelinePage(accountId: widget.accountId),
         ],
       )
     );
@@ -131,7 +135,7 @@ class ProfilePageHeader extends StatelessWidget {
 }
 
 final accountInfoFutureFamilyProvider =
-    FutureProvider.family((ref, String accountId) {
+    FutureProvider.family.autoDispose((ref, String accountId) {
   return ref.read(accountRepositoryProvider).find(accountId: accountId);
 });
 

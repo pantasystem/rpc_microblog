@@ -66,6 +66,7 @@ func (r *TimelienService) GetAccountTimeline(ctx context.Context, in *proto.Acco
 	}
 	aUuid, err := uuid.Parse(aId)
 	if err != nil {
+		fmt.Printf("parse accountId error: %+v\n", err)
 		return nil, err
 	}
 	q := &repository.FindByAccountQuery{}
@@ -81,8 +82,15 @@ func (r *TimelienService) GetAccountTimeline(ctx context.Context, in *proto.Acco
 			q.MinId = &minId
 		}
 	}
-	res, err := r.Module.RepositoryModule().StatusRepository().FindByAccountId(ctx, aUuid, q)
+	targetId, err := uuid.Parse(in.AccountId)
 	if err != nil {
+		fmt.Printf("parse targetId error: %+v\n", err)
+		return nil, err
+	}
+
+	res, err := r.Module.RepositoryModule().StatusRepository().FindByAccountId(ctx, targetId, q)
+	if err != nil {
+		fmt.Printf("find by account id error: %+v\n", err)
 		return nil, err
 	}
 	protoStatuses := make([]*proto.Status, len(res))
@@ -99,6 +107,7 @@ func (r *TimelienService) GetAccountTimeline(ctx context.Context, in *proto.Acco
 		nmaId := res[len(res)-1].Id.String()
 		tr.NextMaxId = &nmaId
 	}
+	fmt.Printf("count: %d\n", len(res))
 
 	return tr, nil
 

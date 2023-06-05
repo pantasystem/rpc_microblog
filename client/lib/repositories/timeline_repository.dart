@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:client/generated/proto/timeline.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
@@ -17,6 +19,16 @@ class TimelineRepository {
         options: CallOptions(metadata: {
           "Authorization": "Bearer ${await authRepository.getToken()}"
         })
+    );
+  }
+
+  Future<TimelineResponse> getAccountTimeline({required String accountId, String? maxId, String? minId,}) async {
+    log("call getAccountTimeline");
+    return await client.getAccountTimeline(
+        AccountTimelineRequest(accountId: accountId, maxId: maxId, minId: minId),
+      options: CallOptions(metadata: {
+        "Authorization": "Bearer ${await authRepository.getToken()}"
+      })
     );
   }
 }
