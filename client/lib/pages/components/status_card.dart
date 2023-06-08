@@ -9,12 +9,14 @@ class StatusCard extends StatelessWidget {
     required this.onReplyButtonPressed,
     required this.onReblogButtonPressed,
     required this.onAddReactionButtonPressed,
+    required this.onAvatarIconPressed,
   });
 
   final Status status;
   final VoidCallback onReplyButtonPressed;
   final VoidCallback onReblogButtonPressed;
   final VoidCallback onAddReactionButtonPressed;
+  final VoidCallback onAvatarIconPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class StatusCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 円形のアイコン
-              AvatarIcon(avatarUrl: content.account.avatarUrl),
+              AvatarIcon(avatarUrl: content.account.avatarUrl, onPressed: onAvatarIconPressed,),
               const SizedBox(width: 6),
               Expanded(
                 child: Column(
@@ -119,14 +121,18 @@ class ActionButtons extends StatelessWidget {
 class AvatarIcon extends StatelessWidget {
   final String avatarUrl;
   final double radius;
+  final VoidCallback? onPressed;
 
-  const AvatarIcon({super.key, required this.avatarUrl, this.radius = 28});
+  const AvatarIcon({super.key, required this.avatarUrl, this.radius = 28, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: radius,
-      backgroundImage: NetworkImage(avatarUrl),
+    return GestureDetector(
+      onTap: onPressed,
+      child: CircleAvatar(
+        radius: radius,
+        backgroundImage: NetworkImage(avatarUrl),
+      ),
     );
   }
 }

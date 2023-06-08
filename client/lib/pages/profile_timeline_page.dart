@@ -42,6 +42,9 @@ class ProfileTimelinePage extends ConsumerWidget {
                 },
               );
             },
+            onAvatarIconPressed: () {
+              GoRouter.of(context).push("/profile/${notifier.statuses[index].account.id}");
+            },
           );
         });
   }
