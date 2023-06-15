@@ -14,6 +14,9 @@ class TimelineNotifier extends ChangeNotifier {
       if (_loading) {
         return;
       }
+      if (statuses.any((element) => element.id == event.id)) {
+        return;
+      }
       statuses = [
         event,
         ...statuses,
@@ -41,7 +44,7 @@ class TimelineNotifier extends ChangeNotifier {
     try {
       _loading = true;
       final res = await timelineRepository.getTimeline(maxId: statuses.lastOrNull?.id);
-      statuses.addAll(res.statuses);
+      statuses = [...statuses, ...res.statuses];
     } finally {
       _loading = false;
     }
@@ -51,7 +54,11 @@ class TimelineNotifier extends ChangeNotifier {
   }
 
   Future<void> refreshLoad() async {
+    if (_loading) {
+      return;
+    }
     statuses = [];
+    notifyListeners();
     await fetchNext();
   }
 }
