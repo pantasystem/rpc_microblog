@@ -1,6 +1,7 @@
 package module
 
 import (
+	"systems.panta/rpc-microblog/pkg/event"
 	"systems.panta/rpc-microblog/pkg/repository"
 	"systems.panta/rpc-microblog/pkg/service"
 )
@@ -8,4 +9,5 @@ import (
 type Module interface {
 	RepositoryModule() repository.Module
 	ServiceModule() *service.Module
+	EventModule() *event.Module
 }

@@ -216,3 +216,50 @@ class AccountTimelineRequest extends $pb.GeneratedMessage {
   void clearMaxId() => clearField(3);
 }
 
+class StreamTimelineRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StreamTimelineRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
+    ..hasRequiredFields = false
+  ;
+
+  StreamTimelineRequest._() : super();
+  factory StreamTimelineRequest({
+    $core.String? token,
+  }) {
+    final _result = create();
+    if (token != null) {
+      _result.token = token;
+    }
+    return _result;
+  }
+  factory StreamTimelineRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StreamTimelineRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StreamTimelineRequest clone() => StreamTimelineRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StreamTimelineRequest copyWith(void Function(StreamTimelineRequest) updates) => super.copyWith((message) => updates(message as StreamTimelineRequest)) as StreamTimelineRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StreamTimelineRequest create() => StreamTimelineRequest._();
+  StreamTimelineRequest createEmptyInstance() => create();
+  static $pb.PbList<StreamTimelineRequest> createRepeated() => $pb.PbList<StreamTimelineRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StreamTimelineRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamTimelineRequest>(create);
+  static StreamTimelineRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get token => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set token($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToken() => clearField(1);
+}
+

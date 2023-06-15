@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type TimelineServiceClient interface {
 	GetTimeline(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
 	GetAccountTimeline(ctx context.Context, in *AccountTimelineRequest, opts ...grpc.CallOption) (*TimelineResponse, error)
-	StreamTimeline(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (TimelineService_StreamTimelineClient, error)
+	ObserveTimeline(ctx context.Context, in *StreamTimelineRequest, opts ...grpc.CallOption) (TimelineService_ObserveTimelineClient, error)
 }
 
 type timelineServiceClient struct {
@@ -49,12 +49,12 @@ func (c *timelineServiceClient) GetAccountTimeline(ctx context.Context, in *Acco
 	return out, nil
 }
 
-func (c *timelineServiceClient) StreamTimeline(ctx context.Context, in *TimelineRequest, opts ...grpc.CallOption) (TimelineService_StreamTimelineClient, error) {
-	stream, err := c.cc.NewStream(ctx, &TimelineService_ServiceDesc.Streams[0], "/TimelineService/StreamTimeline", opts...)
+func (c *timelineServiceClient) ObserveTimeline(ctx context.Context, in *StreamTimelineRequest, opts ...grpc.CallOption) (TimelineService_ObserveTimelineClient, error) {
+	stream, err := c.cc.NewStream(ctx, &TimelineService_ServiceDesc.Streams[0], "/TimelineService/ObserveTimeline", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &timelineServiceStreamTimelineClient{stream}
+	x := &timelineServiceObserveTimelineClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -64,16 +64,16 @@ func (c *timelineServiceClient) StreamTimeline(ctx context.Context, in *Timeline
 	return x, nil
 }
 
-type TimelineService_StreamTimelineClient interface {
+type TimelineService_ObserveTimelineClient interface {
 	Recv() (*Status, error)
 	grpc.ClientStream
 }
 
-type timelineServiceStreamTimelineClient struct {
+type timelineServiceObserveTimelineClient struct {
 	grpc.ClientStream
 }
 
-func (x *timelineServiceStreamTimelineClient) Recv() (*Status, error) {
+func (x *timelineServiceObserveTimelineClient) Recv() (*Status, error) {
 	m := new(Status)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ func (x *timelineServiceStreamTimelineClient) Recv() (*Status, error) {
 type TimelineServiceServer interface {
 	GetTimeline(context.Context, *TimelineRequest) (*TimelineResponse, error)
 	GetAccountTimeline(context.Context, *AccountTimelineRequest) (*TimelineResponse, error)
-	StreamTimeline(*TimelineRequest, TimelineService_StreamTimelineServer) error
+	ObserveTimeline(*StreamTimelineRequest, TimelineService_ObserveTimelineServer) error
 	mustEmbedUnimplementedTimelineServiceServer()
 }
 
@@ -101,8 +101,8 @@ func (UnimplementedTimelineServiceServer) GetTimeline(context.Context, *Timeline
 func (UnimplementedTimelineServiceServer) GetAccountTimeline(context.Context, *AccountTimelineRequest) (*TimelineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountTimeline not implemented")
 }
-func (UnimplementedTimelineServiceServer) StreamTimeline(*TimelineRequest, TimelineService_StreamTimelineServer) error {
-	return status.Errorf(codes.Unimplemented, "method StreamTimeline not implemented")
+func (UnimplementedTimelineServiceServer) ObserveTimeline(*StreamTimelineRequest, TimelineService_ObserveTimelineServer) error {
+	return status.Errorf(codes.Unimplemented, "method ObserveTimeline not implemented")
 }
 func (UnimplementedTimelineServiceServer) mustEmbedUnimplementedTimelineServiceServer() {}
 
@@ -153,24 +153,24 @@ func _TimelineService_GetAccountTimeline_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimelineService_StreamTimeline_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(TimelineRequest)
+func _TimelineService_ObserveTimeline_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamTimelineRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(TimelineServiceServer).StreamTimeline(m, &timelineServiceStreamTimelineServer{stream})
+	return srv.(TimelineServiceServer).ObserveTimeline(m, &timelineServiceObserveTimelineServer{stream})
 }
 
-type TimelineService_StreamTimelineServer interface {
+type TimelineService_ObserveTimelineServer interface {
 	Send(*Status) error
 	grpc.ServerStream
 }
 
-type timelineServiceStreamTimelineServer struct {
+type timelineServiceObserveTimelineServer struct {
 	grpc.ServerStream
 }
 
-func (x *timelineServiceStreamTimelineServer) Send(m *Status) error {
+func (x *timelineServiceObserveTimelineServer) Send(m *Status) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -192,8 +192,8 @@ var TimelineService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamTimeline",
-			Handler:       _TimelineService_StreamTimeline_Handler,
+			StreamName:    "ObserveTimeline",
+			Handler:       _TimelineService_ObserveTimeline_Handler,
 			ServerStreams: true,
 		},
 	},

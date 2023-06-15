@@ -55,3 +55,13 @@ const AccountTimelineRequest$json = const {
 
 /// Descriptor for `AccountTimelineRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List accountTimelineRequestDescriptor = $convert.base64Decode('ChZBY2NvdW50VGltZWxpbmVSZXF1ZXN0Eh0KCmFjY291bnRfaWQYASABKAlSCWFjY291bnRJZBIaCgZtaW5faWQYAiABKAlIAFIFbWluSWSIAQESGgoGbWF4X2lkGAMgASgJSAFSBW1heElkiAEBQgkKB19taW5faWRCCQoHX21heF9pZA==');
+@$core.Deprecated('Use streamTimelineRequestDescriptor instead')
+const StreamTimelineRequest$json = const {
+  '1': 'StreamTimelineRequest',
+  '2': const [
+    const {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+/// Descriptor for `StreamTimelineRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamTimelineRequestDescriptor = $convert.base64Decode('ChVTdHJlYW1UaW1lbGluZVJlcXVlc3QSFAoFdG9rZW4YASABKAlSBXRva2Vu');

@@ -21,8 +21,14 @@ message AccountTimelineRequest {
     optional string max_id = 3;
 }
 
+message StreamTimelineRequest {
+    string token = 1;
+}
+
+
 service TimelineService {
     rpc GetTimeline(TimelineRequest) returns (TimelineResponse);
     rpc GetAccountTimeline(AccountTimelineRequest) returns (TimelineResponse);
-    rpc StreamTimeline(TimelineRequest) returns (stream Status);
+
+    rpc ObserveTimeline(StreamTimelineRequest) returns (stream Status);
 }

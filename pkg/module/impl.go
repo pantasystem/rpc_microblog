@@ -22,3 +22,7 @@ func (m ModuleImpl) ServiceModule() *service.Module {
 		RepositoryModule: m.RepositoryModule(),
 	}
 }
+
+func (m ModuleImpl) EventModule() *event.Module {
+	return event.NewEventModule(m.StatusEventManager)
+}

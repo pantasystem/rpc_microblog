@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"systems.panta/rpc-microblog/pkg/event"
 	"systems.panta/rpc-microblog/pkg/handler/proto"
 	"systems.panta/rpc-microblog/pkg/module"
 	"systems.panta/rpc-microblog/pkg/repository"
@@ -111,4 +112,37 @@ func (r *TimelienService) GetAccountTimeline(ctx context.Context, in *proto.Acco
 
 	return tr, nil
 
+}
+
+func (r *TimelienService) ObserveTimeline(req *proto.StreamTimelineRequest, sv proto.TimelineService_ObserveTimelineServer) error {
+	ac, err := r.Module.RepositoryModule().AccountRepository().FindByToken(sv.Context(), req.Token)
+	if err != nil {
+		return err
+	}
+
+	aUuid := ac.Id
+	if err != nil {
+		fmt.Printf("parse accountId error: %+v\n", err)
+		return err
+	}
+	clientId := uuid.New().String()
+
+	client := event.StatusClient{
+		EventChannel: make(chan *event.StatusEvent),
+	}
+	r.Module.EventModule().StatusEventManager().Register(clientId, &client)
+
+	go func() {
+		for event := range client.EventChannel {
+			if err := sv.Send(ConvertToProtoModel(event.Post, &aUuid)); err != nil {
+				fmt.Printf("send error: %+v\n", err)
+				return
+			}
+		}
+	}()
+	<-sv.Context().Done()
+
+	r.Module.EventModule().StatusEventManager().Unregister(clientId)
+	close(client.EventChannel)
+	return nil
 }

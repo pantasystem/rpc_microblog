@@ -27,10 +27,10 @@ class TimelineServiceClient extends $grpc.Client {
           ($3.AccountTimelineRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $3.TimelineResponse.fromBuffer(value));
-  static final _$streamTimeline =
-      $grpc.ClientMethod<$3.TimelineRequest, $2.Status>(
-          '/TimelineService/StreamTimeline',
-          ($3.TimelineRequest value) => value.writeToBuffer(),
+  static final _$observeTimeline =
+      $grpc.ClientMethod<$3.StreamTimelineRequest, $2.Status>(
+          '/TimelineService/ObserveTimeline',
+          ($3.StreamTimelineRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $2.Status.fromBuffer(value));
 
   TimelineServiceClient($grpc.ClientChannel channel,
@@ -50,10 +50,11 @@ class TimelineServiceClient extends $grpc.Client {
     return $createUnaryCall(_$getAccountTimeline, request, options: options);
   }
 
-  $grpc.ResponseStream<$2.Status> streamTimeline($3.TimelineRequest request,
+  $grpc.ResponseStream<$2.Status> observeTimeline(
+      $3.StreamTimelineRequest request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
-        _$streamTimeline, $async.Stream.fromIterable([request]),
+        _$observeTimeline, $async.Stream.fromIterable([request]),
         options: options);
   }
 }
@@ -78,12 +79,13 @@ abstract class TimelineServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $3.AccountTimelineRequest.fromBuffer(value),
             ($3.TimelineResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$3.TimelineRequest, $2.Status>(
-        'StreamTimeline',
-        streamTimeline_Pre,
+    $addMethod($grpc.ServiceMethod<$3.StreamTimelineRequest, $2.Status>(
+        'ObserveTimeline',
+        observeTimeline_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $3.TimelineRequest.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $3.StreamTimelineRequest.fromBuffer(value),
         ($2.Status value) => value.writeToBuffer()));
   }
 
@@ -98,15 +100,15 @@ abstract class TimelineServiceBase extends $grpc.Service {
     return getAccountTimeline(call, await request);
   }
 
-  $async.Stream<$2.Status> streamTimeline_Pre($grpc.ServiceCall call,
-      $async.Future<$3.TimelineRequest> request) async* {
-    yield* streamTimeline(call, await request);
+  $async.Stream<$2.Status> observeTimeline_Pre($grpc.ServiceCall call,
+      $async.Future<$3.StreamTimelineRequest> request) async* {
+    yield* observeTimeline(call, await request);
   }
 
   $async.Future<$3.TimelineResponse> getTimeline(
       $grpc.ServiceCall call, $3.TimelineRequest request);
   $async.Future<$3.TimelineResponse> getAccountTimeline(
       $grpc.ServiceCall call, $3.AccountTimelineRequest request);
-  $async.Stream<$2.Status> streamTimeline(
-      $grpc.ServiceCall call, $3.TimelineRequest request);
+  $async.Stream<$2.Status> observeTimeline(
+      $grpc.ServiceCall call, $3.StreamTimelineRequest request);
 }
