@@ -11,6 +11,7 @@ import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
 import 'timeline.pb.dart' as $3;
+import 'statuses.pb.dart' as $2;
 export 'timeline.pb.dart';
 
 class TimelineServiceClient extends $grpc.Client {
@@ -26,6 +27,11 @@ class TimelineServiceClient extends $grpc.Client {
           ($3.AccountTimelineRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $3.TimelineResponse.fromBuffer(value));
+  static final _$streamTimeline =
+      $grpc.ClientMethod<$3.TimelineRequest, $2.Status>(
+          '/TimelineService/StreamTimeline',
+          ($3.TimelineRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.Status.fromBuffer(value));
 
   TimelineServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -42,6 +48,13 @@ class TimelineServiceClient extends $grpc.Client {
       $3.AccountTimelineRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountTimeline, request, options: options);
+  }
+
+  $grpc.ResponseStream<$2.Status> streamTimeline($3.TimelineRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$streamTimeline, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -65,6 +78,13 @@ abstract class TimelineServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $3.AccountTimelineRequest.fromBuffer(value),
             ($3.TimelineResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$3.TimelineRequest, $2.Status>(
+        'StreamTimeline',
+        streamTimeline_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $3.TimelineRequest.fromBuffer(value),
+        ($2.Status value) => value.writeToBuffer()));
   }
 
   $async.Future<$3.TimelineResponse> getTimeline_Pre(
@@ -78,8 +98,15 @@ abstract class TimelineServiceBase extends $grpc.Service {
     return getAccountTimeline(call, await request);
   }
 
+  $async.Stream<$2.Status> streamTimeline_Pre($grpc.ServiceCall call,
+      $async.Future<$3.TimelineRequest> request) async* {
+    yield* streamTimeline(call, await request);
+  }
+
   $async.Future<$3.TimelineResponse> getTimeline(
       $grpc.ServiceCall call, $3.TimelineRequest request);
   $async.Future<$3.TimelineResponse> getAccountTimeline(
       $grpc.ServiceCall call, $3.AccountTimelineRequest request);
+  $async.Stream<$2.Status> streamTimeline(
+      $grpc.ServiceCall call, $3.TimelineRequest request);
 }

@@ -24,4 +24,5 @@ message AccountTimelineRequest {
 service TimelineService {
     rpc GetTimeline(TimelineRequest) returns (TimelineResponse);
     rpc GetAccountTimeline(AccountTimelineRequest) returns (TimelineResponse);
+    rpc StreamTimeline(TimelineRequest) returns (stream Status);
 }
