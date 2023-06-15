@@ -15,6 +15,7 @@ import (
 	"gorm.io/gorm"
 	"systems.panta/rpc-microblog/pkg/config"
 	"systems.panta/rpc-microblog/pkg/entity"
+	"systems.panta/rpc-microblog/pkg/event"
 	"systems.panta/rpc-microblog/pkg/handler"
 	"systems.panta/rpc-microblog/pkg/module"
 )
@@ -34,12 +35,15 @@ func main() {
 
 	db.AutoMigrate(&entity.Account{}, &entity.Status{}, &entity.Reaction{}, &entity.CustomEmoji{}, &entity.Follow{})
 
+	sem := event.NewStatusEventmanager()
+
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Port))
 	if err != nil {
 		panic(err)
 	}
 	m := module.ModuleImpl{
-		Db: db,
+		Db:                 db,
+		StatusEventManager: sem,
 	}
 	s := handler.Setup(m)
 	go func() {

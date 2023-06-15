@@ -9,11 +9,13 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"systems.panta/rpc-microblog/pkg/entity"
+	"systems.panta/rpc-microblog/pkg/event"
 	"systems.panta/rpc-microblog/pkg/repository"
 )
 
 type StatusRepositoryImpl struct {
-	Db *gorm.DB
+	Db                 *gorm.DB
+	StatusEventManager *event.StatusEventManager
 }
 
 func (r *StatusRepositoryImpl) Create(ctx context.Context, status *entity.Status) (*entity.Status, error) {
@@ -27,6 +29,10 @@ func (r *StatusRepositoryImpl) Create(ctx context.Context, status *entity.Status
 	if result.Error != nil {
 		return nil, result.Error
 	}
+	r.StatusEventManager.PublishEvent(&event.StatusEvent{
+		EventType: event.StatusCreate,
+		Post:      status,
+	})
 
 	return r.FindById(ctx, status.Id)
 }
@@ -43,6 +49,12 @@ func (r *StatusRepositoryImpl) Delete(ctx context.Context, status *entity.Status
 	if result.Error != nil {
 		return result.Error
 	}
+	r.StatusEventManager.PublishEvent(
+		&event.StatusEvent{
+			EventType: event.StatusDelete,
+			Post:      status,
+		},
+	)
 	return nil
 }
 
