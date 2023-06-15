@@ -29,12 +29,18 @@ func (r *StatusRepositoryImpl) Create(ctx context.Context, status *entity.Status
 	if result.Error != nil {
 		return nil, result.Error
 	}
+
+	newPost, err := r.FindById(ctx, status.Id)
+	if err != nil {
+		return nil, err
+	}
+
 	r.StatusEventManager.PublishEvent(&event.StatusEvent{
 		EventType: event.StatusCreate,
-		Post:      status,
+		Post:      newPost,
 	})
 
-	return r.FindById(ctx, status.Id)
+	return newPost, nil
 }
 
 func (r *StatusRepositoryImpl) Delete(ctx context.Context, status *entity.Status) error {
