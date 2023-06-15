@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:client/generated/proto/statuses.pb.dart';
 import 'package:client/providers/repositories.dart';
 import 'package:client/repositories/timeline_repository.dart';
@@ -7,11 +9,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
 
 class TimelineNotifier extends ChangeNotifier {
-  TimelineNotifier({required this.timelineRepository});
+  TimelineNotifier({required this.timelineRepository}) {
+    _listen = timelineRepository.observeNewPosts().listen((event) {
+      if (_loading) {
+        return;
+      }
+      statuses = [
+        event,
+        ...statuses,
+      ];
+      notifyListeners();
+    });
+  }
   final TimelineRepository timelineRepository;
 
   List<Status> statuses = [];
   bool _loading = false;
+  StreamSubscription? _listen;
+
+
+  @override
+  void dispose() {
+    _listen?.cancel();
+    super.dispose();
+  }
 
   Future<void> fetchNext() async {
     if (_loading) {

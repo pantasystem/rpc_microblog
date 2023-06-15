@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:client/generated/proto/statuses.pbgrpc.dart';
 import 'package:client/generated/proto/timeline.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
@@ -30,5 +31,12 @@ class TimelineRepository {
         "Authorization": "Bearer ${await authRepository.getToken()}"
       })
     );
+  }
+
+  Stream<Status> observeNewPosts() async* {
+    final stream = client.observeTimeline(StreamTimelineRequest(token: await authRepository.getToken()));
+    await for (var res in stream) {
+      yield res;
+    }
   }
 }
