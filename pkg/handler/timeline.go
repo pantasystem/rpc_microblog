@@ -133,11 +133,14 @@ func (r *TimelienService) ObserveTimeline(req *proto.StreamTimelineRequest, sv p
 	r.Module.EventModule().StatusEventManager().Register(clientId, &client)
 
 	go func() {
-		for event := range client.EventChannel {
-			if err := sv.Send(ConvertToProtoModel(event.Post, &aUuid)); err != nil {
-				fmt.Printf("send error: %+v\n", err)
-				return
+		for ev := range client.EventChannel {
+			if ev.EventType == event.StatusCreate {
+				if err := sv.Send(ConvertToProtoModel(ev.Post, &aUuid)); err != nil {
+					fmt.Printf("send error: %+v\n", err)
+					return
+				}
 			}
+
 		}
 	}()
 	<-sv.Context().Done()
