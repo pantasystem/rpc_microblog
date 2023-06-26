@@ -135,12 +135,16 @@ func (r *TimelienService) ObserveTimeline(req *proto.StreamTimelineRequest, sv p
 	go func() {
 		for ev := range client.EventChannel {
 			if ev.EventType == event.StatusCreate {
-				_, err := r.Module.RepositoryModule().FollowRepository().FindByFollowTargetAccountIdAndAccountId(
+				follows, err := r.Module.RepositoryModule().FollowRepository().FindByFollowTargetAccountIdAndAccountId(
 					sv.Context(),
-					aUuid,
 					ev.Post.AccountId,
+					aUuid,
 				)
 				if err != nil {
+					return
+				}
+
+				if len(follows) == 0 && ev.Post.AccountId != aUuid {
 					continue
 				}
 
