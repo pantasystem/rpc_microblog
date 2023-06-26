@@ -135,6 +135,15 @@ func (r *TimelienService) ObserveTimeline(req *proto.StreamTimelineRequest, sv p
 	go func() {
 		for ev := range client.EventChannel {
 			if ev.EventType == event.StatusCreate {
+				_, err := r.Module.RepositoryModule().FollowRepository().FindByFollowTargetAccountIdAndAccountId(
+					sv.Context(),
+					aUuid,
+					ev.Post.AccountId,
+				)
+				if err != nil {
+					continue
+				}
+
 				if err := sv.Send(ConvertToProtoModel(ev.Post, &aUuid)); err != nil {
 					fmt.Printf("send error: %+v\n", err)
 					return

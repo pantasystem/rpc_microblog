@@ -14,6 +14,9 @@ final channelProvider = Provider((ref) {
     if (Platform.isAndroid) {
       return '10.0.2.2';
     }
+    if (Platform.isMacOS) {
+      return '0.0.0.0';
+    }
     return 'localhost';
   }(),
       port: 8080,
