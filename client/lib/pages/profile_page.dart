@@ -43,9 +43,9 @@ class ProfilePageState extends ConsumerState<ProfilePage> {
             data: (profile) => ProfilePageHeader(
                 onToggleFollow: () async {
                   if (relation.valueOrNull?.isFollowing == true) {
-                    ref.read(followRepositoryProvider).delete(accountId: widget.accountId);
+                    await ref.read(followRepositoryProvider).delete(accountId: widget.accountId);
                   } else {
-                    ref.read(followRepositoryProvider).create(accountId: widget.accountId);
+                    await ref.read(followRepositoryProvider).create(accountId: widget.accountId);
                   }
                   ref.refresh(accountRelationFutureFamilyProvider(widget.accountId));
                 },
